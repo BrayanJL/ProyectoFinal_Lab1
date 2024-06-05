@@ -8,23 +8,26 @@ public class Clase {
     private LocalTime horario;
     private String nombre;
     private int capacidad;
+    private boolean estado;
 
     public Clase() {
     }
 
-    public Clase(int idClase, Entrenador entrenador, LocalTime horario, String nombre, int capacidad) {
+    public Clase(int idClase, Entrenador entrenador, LocalTime horario, String nombre, int capacidad, boolean estado) {
         this.idClase = idClase;
         this.entrenador = entrenador;
         this.horario = horario;
         this.nombre = nombre;
         this.capacidad = capacidad;
+        this.estado = estado;
     }
 
-    public Clase(Entrenador entrenador, LocalTime horario, String nombre, int capacidad) {
+    public Clase(Entrenador entrenador, LocalTime horario, String nombre, int capacidad, boolean estado) {
         this.entrenador = entrenador;
         this.horario = horario;
         this.nombre = nombre;
         this.capacidad = capacidad;
+        this.estado = estado;
     }
 
     public int getIdClase() {
@@ -67,9 +70,17 @@ public class Clase {
         this.capacidad = capacidad;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Clase{" + "idClase=" + idClase + ", entrenador=" + entrenador + ", horario=" + horario + ", nombre=" + nombre + ", capacidad=" + capacidad + '}';
+        return "Clase{" + "idClase=" + idClase + ", entrenador=" + entrenador + ", horario=" + horario + ", nombre=" + nombre + ", capacidad=" + capacidad + ", estado=" + estado + '}';
     }
-    
+
 }
