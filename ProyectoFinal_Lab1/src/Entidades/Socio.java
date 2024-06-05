@@ -8,11 +8,12 @@ public class Socio {
     private int edad;
     private String correo;
     private String telefono;
+    private boolean estado;
 
     public Socio() {
     }
 
-    public Socio(int idSocio, int dni, String nombre, String apellido, int edad, String correo, String telefono) {
+    public Socio(int idSocio, int dni, String nombre, String apellido, int edad, String correo, String telefono, boolean estado) {
         this.idSocio = idSocio;
         this.dni = dni;
         this.nombre = nombre;
@@ -20,15 +21,17 @@ public class Socio {
         this.edad = edad;
         this.correo = correo;
         this.telefono = telefono;
+        this.estado = estado;
     }
 
-    public Socio(int dni, String nombre, String apellido, int edad, String correo, String telefono) {
+    public Socio(int dni, String nombre, String apellido, int edad, String correo, String telefono, boolean estado) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.correo = correo;
         this.telefono = telefono;
+        this.estado = estado;
     }
 
     public int getIdSocio() {
@@ -87,9 +90,17 @@ public class Socio {
         this.telefono = telefono;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Socio{" + "idSocio=" + idSocio + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", correo=" + correo + ", telefono=" + telefono + '}';
+        return "Socio{" + "idSocio=" + idSocio + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", correo=" + correo + ", telefono=" + telefono + ", estado=" + estado + '}';
     }
     
 }
