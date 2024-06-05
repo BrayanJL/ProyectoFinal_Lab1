@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-06-2024 a las 16:44:51
+-- Tiempo de generación: 05-06-2024 a las 17:39:18
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -65,7 +65,7 @@ CREATE TABLE `entrenador` (
   `Apellido` varchar(32) NOT NULL,
   `Especialidad` varchar(64) NOT NULL,
   `Disponibilidad` varchar(32) NOT NULL,
-  `estado` tinyint(1) DEFAULT NULL
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -80,8 +80,8 @@ CREATE TABLE `membresía` (
   `Tipo` varchar(32) NOT NULL,
   `Fecha_Inicio` date NOT NULL,
   `Fecha_Fin` date NOT NULL,
-  `estado` tinyint(1) DEFAULT NULL,
-  `costo` decimal(10,0) DEFAULT NULL
+  `estado` tinyint(1) NOT NULL,
+  `costo` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -98,7 +98,7 @@ CREATE TABLE `socio` (
   `Edad` int(10) UNSIGNED NOT NULL,
   `Correo` varchar(64) NOT NULL,
   `Teléfono` varchar(32) NOT NULL,
-  `estado` tinyint(1) DEFAULT NULL
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
