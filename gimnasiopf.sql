@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-05-2024 a las 18:22:37
+-- Tiempo de generación: 05-06-2024 a las 16:44:51
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -21,6 +21,22 @@ SET time_zone = "+00:00";
 -- Base de datos: `gimnasiopf`
 --
 
+CREATE DATABASE gimnasiopf;
+USE gimnasiopf;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asistencia`
+--
+
+CREATE TABLE `asistencia` (
+  `ID_Asistencia` int(11) NOT NULL,
+  `ID_Socio` int(11) NOT NULL,
+  `ID_Clase` int(11) NOT NULL,
+  `Fecha_Asistencia` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -32,7 +48,8 @@ CREATE TABLE `clase` (
   `ID_Entrenador` int(11) NOT NULL,
   `Horario` time NOT NULL,
   `Nombre` varchar(32) NOT NULL,
-  `Capacidad` int(11) NOT NULL
+  `Capacidad` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -47,7 +64,8 @@ CREATE TABLE `entrenador` (
   `Nombre` varchar(32) NOT NULL,
   `Apellido` varchar(32) NOT NULL,
   `Especialidad` varchar(64) NOT NULL,
-  `Disponibilidad` varchar(32) NOT NULL
+  `Disponibilidad` varchar(32) NOT NULL,
+  `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -61,7 +79,9 @@ CREATE TABLE `membresía` (
   `ID_Socio` int(11) NOT NULL,
   `Tipo` varchar(32) NOT NULL,
   `Fecha_Inicio` date NOT NULL,
-  `Fecha_Fin` date NOT NULL
+  `Fecha_Fin` date NOT NULL,
+  `estado` tinyint(1) DEFAULT NULL,
+  `costo` decimal(10,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -77,12 +97,21 @@ CREATE TABLE `socio` (
   `Apellido` varchar(32) NOT NULL,
   `Edad` int(10) UNSIGNED NOT NULL,
   `Correo` varchar(64) NOT NULL,
-  `Teléfono` varchar(32) NOT NULL
+  `Teléfono` varchar(32) NOT NULL,
+  `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `asistencia`
+--
+ALTER TABLE `asistencia`
+  ADD PRIMARY KEY (`ID_Asistencia`),
+  ADD KEY `id_socio_fk` (`ID_Socio`),
+  ADD KEY `id_clase_fk` (`ID_Clase`);
 
 --
 -- Indices de la tabla `clase`
@@ -117,6 +146,12 @@ ALTER TABLE `socio`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `asistencia`
+--
+ALTER TABLE `asistencia`
+  MODIFY `ID_Asistencia` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `clase`
 --
 ALTER TABLE `clase`
@@ -143,6 +178,13 @@ ALTER TABLE `socio`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `asistencia`
+--
+ALTER TABLE `asistencia`
+  ADD CONSTRAINT `asistencia_fk_clase` FOREIGN KEY (`ID_Clase`) REFERENCES `clase` (`ID_Clase`),
+  ADD CONSTRAINT `asistencia_fk_socio` FOREIGN KEY (`ID_Socio`) REFERENCES `socio` (`ID_Socio`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `clase`
