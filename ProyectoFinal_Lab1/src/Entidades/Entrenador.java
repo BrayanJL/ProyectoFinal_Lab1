@@ -7,25 +7,28 @@ public class Entrenador {
     private String apellido;
     private String especialidad;
     private String disponibilidad;
+    private boolean estado;
 
     public Entrenador() {
     }
 
-    public Entrenador(int idEntrenador, int dni, String nombre, String apellido, String especialidad, String disponibilidad) {
+    public Entrenador(int idEntrenador, int dni, String nombre, String apellido, String especialidad, String disponibilidad, boolean estado) {
         this.idEntrenador = idEntrenador;
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.especialidad = especialidad;
         this.disponibilidad = disponibilidad;
+        this.estado = estado;
     }
 
-    public Entrenador(int dni, String nombre, String apellido, String especialidad, String disponibilidad) {
+    public Entrenador(int dni, String nombre, String apellido, String especialidad, String disponibilidad, boolean estado) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.especialidad = especialidad;
         this.disponibilidad = disponibilidad;
+        this.estado = estado;
     }
 
     public int getIdEntrenador() {
@@ -76,9 +79,17 @@ public class Entrenador {
         this.disponibilidad = disponibilidad;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Entrenador{" + "idEntrenador=" + idEntrenador + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", especialidad=" + especialidad + ", disponibilidad=" + disponibilidad + '}';
+        return "Entrenador{" + "idEntrenador=" + idEntrenador + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", especialidad=" + especialidad + ", disponibilidad=" + disponibilidad + ", estado=" + estado + '}';
     }
-    
+
 }
