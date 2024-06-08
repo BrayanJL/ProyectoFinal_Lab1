@@ -41,6 +41,10 @@ public class Clase {
     public Entrenador getEntrenador() {
         return entrenador;
     }
+    
+    public int getIdEntrenador() {
+        return entrenador.getIdEntrenador();
+    }
 
     public void setEntrenador(Entrenador entrenador) {
         this.entrenador = entrenador;
