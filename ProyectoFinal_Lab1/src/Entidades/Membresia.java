@@ -48,6 +48,10 @@ public class Membresia {
     public void setSocio(Socio socio) {
         this.socio = socio;
     }
+    
+    public int getIdSocio() {
+        return socio.getIdSocio();
+    }
 
     public String getTipo() {
         return tipo;
@@ -81,7 +85,7 @@ public class Membresia {
         this.costo = costo;
     }
 
-    public boolean isEstado() {
+    public boolean isActivo() {
         return estado;
     }
 

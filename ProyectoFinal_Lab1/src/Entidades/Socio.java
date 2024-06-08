@@ -90,7 +90,7 @@ public class Socio {
         this.telefono = telefono;
     }
 
-    public boolean isEstado() {
+    public boolean isActivo() {
         return estado;
     }
 
