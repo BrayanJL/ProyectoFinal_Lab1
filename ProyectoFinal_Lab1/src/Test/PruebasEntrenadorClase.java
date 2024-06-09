@@ -6,7 +6,7 @@ import Entidades.Clase;
 import Entidades.Entrenador;
 import java.time.LocalTime;
 
-public class MainTest {
+public class PruebasEntrenadorClase {
     public static void main(String[] args) {
         
         System.out.println("///////////////////// PRUEBAS ENTRENADOR:");
