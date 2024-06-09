@@ -91,25 +91,16 @@ public class PruebasMembresiaSocio {
         
         System.out.println("GUARDAR MEMBRESIA");
         
-        Membresia membresia1 = new Membresia(socio1, "Deluxe", LocalDate.of(2024, Month.MARCH, 23), LocalDate.of(2024, Month.APRIL, 23), 2000, true);
-        Membresia membresia2 = new Membresia(socio4, "Deluxe", LocalDate.of(2024, Month.MAY, 12), LocalDate.of(2024, Month.JUNE, 12), 2500, true);
-        Membresia membresia3 = new Membresia(socio5, "Premium", LocalDate.of(2023, Month.DECEMBER, 30), LocalDate.of(2024, Month.JANUARY, 30), 1800, false);
-        Membresia membresia4 = new Membresia(socio6, "Premium", LocalDate.of(2024, Month.APRIL, 10), LocalDate.of(2024, Month.MAY, 10), 1800, true);
+        Membresia membresia1 = new Membresia(socio1, 12, LocalDate.of(2024, Month.MARCH, 23), LocalDate.of(2024, Month.APRIL, 23), 2000, true);
+        Membresia membresia2 = new Membresia(socio4, 12, LocalDate.of(2024, Month.MAY, 12), LocalDate.of(2024, Month.JUNE, 12), 2500, true);
+        Membresia membresia3 = new Membresia(socio5, 20, LocalDate.of(2023, Month.DECEMBER, 30), LocalDate.of(2024, Month.JANUARY, 30), 1800, false);
+        Membresia membresia4 = new Membresia(socio6, 20, LocalDate.of(2024, Month.APRIL, 10), LocalDate.of(2024, Month.MAY, 10), 1800, true);
         
         md.guardarMembresia(membresia1);
         md.guardarMembresia(membresia2);
         md.guardarMembresia(membresia3);
         md.guardarMembresia(membresia4);
         
-        System.out.println("LISTAR POR TIPO");
-        
-        for (Membresia a :  md.obtenerMembresiasPorTipo(membresia2)) {
-            System.out.println(a.toString());
-        }
-        
-        for (Membresia a :  md.obtenerMembresiasPorTipo(membresia3)) {
-            System.out.println(a.toString());
-        }
         
         System.out.println("LISTAR MEMBRESIAS");
         
@@ -124,15 +115,7 @@ public class PruebasMembresiaSocio {
         for (Membresia a :  md.obtenerMembresias()) {
             System.out.println(a.toString());
         }
-        
-        System.out.println("RENOVAR MEMBRESIA");
-        
-        
-        membresia2.setFechaInicio(LocalDate.of(2024, Month.JUNE, 13));
-        membresia2.setFechaFin(LocalDate.of(2024, Month.JULY, 13));
-        membresia2.setTipo("Premium");
-        
-        md.renovarMembresia(membresia2);
+       
         
         for (Membresia a :  md.obtenerMembresias()) {
             System.out.println(a.toString());

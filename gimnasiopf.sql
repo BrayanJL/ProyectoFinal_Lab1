@@ -83,14 +83,7 @@ CREATE TABLE `membresía` (
   `CantidadPases` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `membresía`
---
 
-INSERT INTO `membresía` (`ID_Membresía`, `ID_Socio`, `Fecha_Inicio`, `Fecha_Fin`, `estado`, `costo`, `CantidadPases`) VALUES
-(24, 58, '2024-03-23', '2024-04-23', 1, 2400, 0),
-(25, 59, '2024-06-13', '2024-07-13', 1, 2500, 0),
-(26, 61, '2024-04-10', '2024-05-10', 1, 1800, 0);
 
 -- --------------------------------------------------------
 
@@ -109,15 +102,6 @@ CREATE TABLE `socio` (
   `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `socio`
---
-
-INSERT INTO `socio` (`ID_Socio`, `DNI`, `Nombre`, `Apellido`, `Edad`, `Correo`, `Teléfono`, `estado`) VALUES
-(58, 42375484, 'Jose', 'Ramirez', 24, 'JoseRamirez@Gmail.com', '2664734954', 1),
-(59, 38888888, 'Hermione', 'Pepinez', 33, 'Herma@hotmail.com', '2664664433', 1),
-(60, 40999888, 'Richard', 'Pepinez', 54, 'Ricky@hotmail.com', '2664768798', 0),
-(61, 38777888, 'Robert', 'Nixon', 54, 'Robxon@hotmail.com', '2664866998', 1);
 
 --
 -- Indexes for dumped tables
