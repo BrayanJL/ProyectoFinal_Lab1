@@ -114,9 +114,43 @@ public class ClaseData {
         return clases;
     }
     
-    public List<Clase> listarClasesActivas() {
+    public List<Clase> listarClasesValidas() {
         List<Clase> clases = listarClases();
         clases.removeIf(clase -> clase.isEstado() == false);
+        clases.removeIf(clase -> clase.getEntrenador().isEstado() == false);
+        
+        return clases;
+    }
+    
+    public List<Clase> listarClasesPorEntrenador(int idEntrenador) {
+        List<Clase> clases = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT clase.ID_Clase, clase.ID_Entrenador, clase.Horario, clase.Nombre, clase.Capacidad, clase.estado "
+                + "FROM clase INNER JOIN entrenador "
+                + "ON clase.ID_Entrenador = entrenador.ID_Entrenador "
+                + "WHERE clase.ID_Entrenador = ? ";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idEntrenador);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Clase clase = new Clase();
+                clase.setIdClase(rs.getInt("ID_Clase"));
+                clase.setEntrenador(entData.buscarEntrenador(rs.getInt("ID_Entrenador")));
+                clase.setHorario(rs.getTime("Horario").toLocalTime());
+                clase.setNombre(rs.getString("Nombre"));
+                clase.setCapacidad(rs.getInt("Capacidad"));
+                clase.setEstado(rs.getBoolean("estado"));
+                clases.add(clase);
+            }
+            ps.close();
+                
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Clase "+e.getMessage());
+        }
         
         return clases;
     }
