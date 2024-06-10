@@ -2,6 +2,7 @@ package AccesoADatos;
 
 import Entidades.Membresia;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -133,5 +134,31 @@ public class MembresiaData {
         }
     }
     
-
+    public Membresia recibirUltimaMembresia(int idSocio) {
+        String sql = "SELECT * FROM Membresía WHERE ID_Socio = ? AND NOW() BETWEEN Fecha_Inicio AND Fecha_Fin ORDER BY Estado DESC, CantidadPases DESC LIMIT 1";
+        //Prioriza membresias Activas y con mayor cantidad de pases
+        Membresia membresia = new Membresia();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                membresia.setIdMembresia(rs.getInt("ID_Membresía"));
+                membresia.setCantidadPases(rs.getInt("CantidadPases"));
+                membresia.setCosto(rs.getInt("Costo"));
+                membresia.setEstado(rs.getBoolean("Estado"));
+                membresia.setFechaInicio(rs.getDate("Fecha_Inicio").toLocalDate());
+                membresia.setFechaFin(rs.getDate("Fecha_Fin").toLocalDate());
+                membresia.setSocio(socData.buscarSocio(idSocio));
+            }
+            ps.close();
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Membresia " + e.getMessage());
+        }
+        
+        return membresia;
+    }
+    
 }
