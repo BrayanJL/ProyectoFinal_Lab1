@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class Asistencia {
     private int idAsistencia;
-    private Socio idSocio;
-    private Clase idClase;
+    private Socio socio;
+    private Clase clase;
     private LocalDate fechaAsistencia;
 
     public Asistencia() {
@@ -13,14 +13,14 @@ public class Asistencia {
 
     public Asistencia(int idAsistencia, Socio idSocio, Clase idClase, LocalDate fechaAsistencia) {
         this.idAsistencia = idAsistencia;
-        this.idSocio = idSocio;
-        this.idClase = idClase;
+        this.socio = idSocio;
+        this.clase = idClase;
         this.fechaAsistencia = fechaAsistencia;
     }
 
     public Asistencia(Socio idSocio, Clase idClase, LocalDate fechaAsistencia) {
-        this.idSocio = idSocio;
-        this.idClase = idClase;
+        this.socio = idSocio;
+        this.clase = idClase;
         this.fechaAsistencia = fechaAsistencia;
     }
 
@@ -32,20 +32,20 @@ public class Asistencia {
         this.idAsistencia = idAsistencia;
     }
 
-    public Socio getIdSocio() {
-        return idSocio;
+    public Socio getSocio() {
+        return socio;
     }
 
-    public void setIdSocio(Socio idSocio) {
-        this.idSocio = idSocio;
+    public void setSocio(Socio socio) {
+        this.socio = socio;
     }
 
-    public Clase getIdClase() {
-        return idClase;
+    public Clase getClase() {
+        return clase;
     }
 
-    public void setIdClase(Clase idClase) {
-        this.idClase = idClase;
+    public void setClase(Clase clase) {
+        this.clase = clase;
     }
 
     public LocalDate getFechaAsistencia() {
@@ -58,7 +58,7 @@ public class Asistencia {
 
     @Override
     public String toString() {
-        return "Asistencia{" + "idAsistencia=" + idAsistencia + ", idSocio=" + idSocio + ", idClase=" + idClase + ", fechaAsistencia=" + fechaAsistencia + '}';
+        return "Asistencia{" + "idAsistencia=" + idAsistencia + ", idSocio=" + socio.getIdSocio() + ", idClase=" + clase.getIdClase() + ", fechaAsistencia=" + fechaAsistencia + '}';
     }
     
 }
