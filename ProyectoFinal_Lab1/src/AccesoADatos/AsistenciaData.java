@@ -41,6 +41,7 @@ public class AsistenciaData {
             }else if (!ok4){
                 JOptionPane.showMessageDialog(null, "Necesita tener una membresia activa con pases");
             }
+            return;
         }
         
         else{
@@ -59,9 +60,17 @@ public class AsistenciaData {
 
                 if (rs.next()) {
                     asistencia.setIdAsistencia(rs.getInt(1));
+                    
+                    //Reducimos en 1 la cantidad de pases
+                    membresia.setCantidadPases(membresia.getCantidadPases()-1);
+                    membresiaData.guardarMembresia(membresia);
+                    
                     JOptionPane.showMessageDialog(null, "Se agrego la asistencia exitosamente");
                 }
                 ps.close();
+                
+                
+                
 
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Asistencia "+e.getMessage());
