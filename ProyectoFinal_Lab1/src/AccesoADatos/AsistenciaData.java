@@ -1,7 +1,9 @@
 package AccesoADatos;
 
 import Entidades.Asistencia;
+import Entidades.Membresia;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,12 +23,13 @@ public class AsistenciaData {
     }
     
     public void guardarAsistencia(Asistencia asistencia){
-        Membresia = membresiaData.
+        Membresia membresia = membresiaData.recibirUltimaMembresia(asistencia.getSocio().getIdSocio());
         
         boolean ok1 = asistencia.getClase().isEstado();
         boolean ok2 = asistencia.getClase().getEntrenador().isEstado();
         boolean ok3 = asistencia.getSocio().isActivo();
-        boolean ok4 = 
+        boolean ok4 = membresia.isActivo()
+                    && membresia.getCantidadPases()>0;
         
         if (!ok1 || !ok2 || !ok3 || ok4){
             if(!ok1) {
@@ -35,6 +38,8 @@ public class AsistenciaData {
                 JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase con inactiva");
             }else if (!ok3){
                 JOptionPane.showMessageDialog(null, "Un socio inactivo no puede asistir a una clase");
+            }else if (!ok4){
+                JOptionPane.showMessageDialog(null, "Necesita tener una membresia activa con pases");
             }
         }
         
