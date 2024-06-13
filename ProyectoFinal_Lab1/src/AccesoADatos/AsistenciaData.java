@@ -10,6 +10,7 @@ public class AsistenciaData {
     private Connection con = null;
     private SocioData socioData;
     private ClaseData claseData;
+    private MembresiaData membresiaData;
     
     
 
@@ -20,27 +21,46 @@ public class AsistenciaData {
     }
     
     public void guardarAsistencia(Asistencia asistencia){
-        String sql = "INSERT INTO Asistencia (ID_Socio, ID_Clase, Fecha_Asistencia) "
-                    + "VALUES ( ? , ? , ?)";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, asistencia.getSocio().getIdSocio());
-            ps.setInt(2, asistencia.getClase().getIdClase());
-            ps.setDate(3, Date.valueOf(asistencia.getFechaAsistencia()));
-
-
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if (rs.next()) {
-                asistencia.setIdAsistencia(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Se agrego la asistencia exitosamente");
+        Membresia = membresiaData.
+        
+        boolean ok1 = asistencia.getClase().isEstado();
+        boolean ok2 = asistencia.getClase().getEntrenador().isEstado();
+        boolean ok3 = asistencia.getSocio().isActivo();
+        boolean ok4 = 
+        
+        if (!ok1 || !ok2 || !ok3 || ok4){
+            if(!ok1) {
+                JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase con un entrenador inactivo");
+            }else if(!ok2) {
+                JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase con inactiva");
+            }else if (!ok3){
+                JOptionPane.showMessageDialog(null, "Un socio inactivo no puede asistir a una clase");
             }
-            ps.close();
+        }
+        
+        else{
+            String sql = "INSERT INTO Asistencia (ID_Socio, ID_Clase, Fecha_Asistencia) "
+                        + "VALUES ( ? , ? , ?)";
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Asistencia "+e.getMessage());
+            try {
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, asistencia.getSocio().getIdSocio());
+                ps.setInt(2, asistencia.getClase().getIdClase());
+                ps.setDate(3, Date.valueOf(asistencia.getFechaAsistencia()));
+
+
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+
+                if (rs.next()) {
+                    asistencia.setIdAsistencia(rs.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Se agrego la asistencia exitosamente");
+                }
+                ps.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Asistencia "+e.getMessage());
+            }
         }
     }
     
