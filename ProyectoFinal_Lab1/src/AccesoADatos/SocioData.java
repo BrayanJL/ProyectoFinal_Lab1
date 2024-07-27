@@ -155,7 +155,6 @@ public class SocioData {
         }
     }
     
-    
     public void eliminarSocio(int dni) {
         try {
             String sql = "UPDATE socio SET estado = 0 WHERE dni = ?";

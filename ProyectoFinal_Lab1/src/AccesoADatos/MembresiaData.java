@@ -161,4 +161,22 @@ public class MembresiaData {
         return membresia;
     }
     
+    public int contarPases(int idSocio){
+        int pases = 0;
+        
+        String sql = "SELECT SUM(CantidadPases) AS CantidadPases FROM `membresía` WHERE ID_Socio = ? AND NOW() BETWEEN Fecha_Inicio AND Fecha_Fin";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                pases = rs.getInt("CantidadPases");
+            }
+            ps.close();
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Membresia " + e.getMessage());
+        }
+        return pases;
+    }
 }
