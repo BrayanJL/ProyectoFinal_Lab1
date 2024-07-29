@@ -30,6 +30,7 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         initComponents();
         modeloEntrenador = (DefaultTableModel) jtEntrenador.getModel();
         llenarTabla();
+        cargarEntrenadores();
         jrbEstado.setVisible(false);
     }
     
@@ -62,9 +63,9 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtEntrenador = new javax.swing.JTable();
-        jbEntrenadores = new javax.swing.JButton();
-        jbEntrenadoresActivos = new javax.swing.JButton();
-        jbEntrenadoresInactivos = new javax.swing.JButton();
+        jbBuscarPorNombre = new javax.swing.JButton();
+        jcbEntrenador = new javax.swing.JComboBox<>();
+        jtfCaracteres = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(181, 181, 181));
 
@@ -204,24 +205,16 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
-        jbEntrenadores.setText("Listar Entrenadores");
-        jbEntrenadores.addActionListener(new java.awt.event.ActionListener() {
+        jbBuscarPorNombre.setText("Buscar Por Nombre");
+        jbBuscarPorNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEntrenadoresActionPerformed(evt);
+                jbBuscarPorNombreActionPerformed(evt);
             }
         });
 
-        jbEntrenadoresActivos.setText("Listar Entrenadores Activos");
-        jbEntrenadoresActivos.addActionListener(new java.awt.event.ActionListener() {
+        jcbEntrenador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEntrenadoresActivosActionPerformed(evt);
-            }
-        });
-
-        jbEntrenadoresInactivos.setText("Listar Entrenadores Inactivos");
-        jbEntrenadoresInactivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEntrenadoresInactivosActionPerformed(evt);
+                jcbEntrenadorActionPerformed(evt);
             }
         });
 
@@ -242,10 +235,13 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
                             .addComponent(jbModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jbDeshabilitar, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                             .addComponent(jbAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jbEntrenadoresInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbEntrenadoresActivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbEntrenadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtfCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jcbEntrenador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -264,20 +260,26 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbDeshabilitar))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jbEntrenadores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbEntrenadoresActivos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbEntrenadoresInactivos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jcbEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscarPorNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                 .addGap(9, 9, 9))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void cargarEntrenadores() {
+        jcbEntrenador.addItem("Listar Todos Los Entrenadores");
+        jcbEntrenador.addItem("Listar Entrenador Activos");
+        jcbEntrenador.addItem("Listar Entrenador Inactivos");
+    }
+    
     public boolean isCambiosHabilitados() {
         return cambiosHabilitados;
     }
@@ -395,44 +397,6 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
-    private void jbEntrenadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEntrenadoresActionPerformed
-        llenarTabla();
-    }//GEN-LAST:event_jbEntrenadoresActionPerformed
-
-    private void jbEntrenadoresActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEntrenadoresActivosActionPerformed
-        limpiarTabla();
-        List<Entrenador> entrenadores;
-        entrenadores = entrenadorData.listarEntrenadoresActivos();
-        
-        for (Entrenador e : entrenadores) {
-            modeloEntrenador.addRow(new Object[]{
-                e.getIdEntrenador(),
-                e.getDni(),
-                e.getNombre(),
-                e.getApellido(),
-                e.getEspecialidad(),
-                e.isEstado()
-            });
-        }
-    }//GEN-LAST:event_jbEntrenadoresActivosActionPerformed
-
-    private void jbEntrenadoresInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEntrenadoresInactivosActionPerformed
-        limpiarTabla();
-        List<Entrenador> entrenadores;
-        entrenadores = entrenadorData.listarEntrenadoresNoActivos();
-        
-        for (Entrenador e : entrenadores) {
-            modeloEntrenador.addRow(new Object[]{
-                e.getIdEntrenador(),
-                e.getDni(),
-                e.getNombre(),
-                e.getApellido(),
-                e.getEspecialidad(),
-                e.isEstado()
-            });
-        }
-    }//GEN-LAST:event_jbEntrenadoresInactivosActionPerformed
-
     private void jtEntrenadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEntrenadorMouseClicked
         if(jtEntrenador.getSelectedRow() != -1) {
             reestablecerControles();
@@ -455,6 +419,32 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
             setearEntrenadorConDatosDelFormulario();
         }
     }//GEN-LAST:event_jtEntrenadorMouseClicked
+
+    private void jcbEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEntrenadorActionPerformed
+        int eleccion = jcbEntrenador.getSelectedIndex();
+        
+        switch (eleccion) {
+            case 0: llenarTabla();
+            return;
+            case 1: llenarTablaActivos();
+            return;
+            case 2: llenarTablaInactivos();
+        }
+    }//GEN-LAST:event_jcbEntrenadorActionPerformed
+
+    private void jbBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarPorNombreActionPerformed
+        List<Entrenador> entrenadores;
+        int eleccion = jcbEntrenador.getSelectedIndex();
+        
+        switch (eleccion) {
+            case 0: llenarTablasPorNombre(entrenadorData.listarEntrenadores());
+            return;
+            case 1: llenarTablasPorNombre(entrenadorData.listarEntrenadoresActivos());
+            return;
+            case 2: llenarTablasPorNombre(entrenadorData.listarEntrenadoresNoActivos());
+            return;
+        }
+    }//GEN-LAST:event_jbBuscarPorNombreActionPerformed
 
     private void llenarCampos() {
         jtfDNI.setText(String.valueOf(entrenadorActual.getDni()));
@@ -592,17 +582,67 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         }
     }
     
+    private void llenarTablaActivos() {
+        limpiarTabla();
+        List<Entrenador> entrenadores;
+        entrenadores = entrenadorData.listarEntrenadoresActivos();
+        
+        for (Entrenador e : entrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaInactivos() {
+        limpiarTabla();
+        List<Entrenador> entrenadores;
+        entrenadores = entrenadorData.listarEntrenadoresNoActivos();
+        
+        for (Entrenador e : entrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablasPorNombre(List<Entrenador> listaEntrenadores) {
+        limpiarTabla();
+        String tx = jtfCaracteres.getText().toLowerCase();
+        listaEntrenadores.removeIf(entrenador -> !entrenador.getNombre().toLowerCase().startsWith(tx));
+        
+        for (Entrenador e : listaEntrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbAgregar;
     private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbBuscarPorNombre;
     private javax.swing.JButton jbDeshabilitar;
-    private javax.swing.JButton jbEntrenadores;
-    private javax.swing.JButton jbEntrenadoresActivos;
-    private javax.swing.JButton jbEntrenadoresInactivos;
     private javax.swing.JButton jbModificar;
+    private javax.swing.JComboBox<String> jcbEntrenador;
     private javax.swing.JLabel jlApellido;
     private javax.swing.JLabel jlDNI;
     private javax.swing.JLabel jlEntrenador;
@@ -612,6 +652,7 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jrbEstado;
     private javax.swing.JTable jtEntrenador;
     private javax.swing.JTextField jtfApellido;
+    private javax.swing.JTextField jtfCaracteres;
     private javax.swing.JTextField jtfDNI;
     private javax.swing.JTextField jtfEspecialidad;
     private javax.swing.JTextField jtfEstado;
