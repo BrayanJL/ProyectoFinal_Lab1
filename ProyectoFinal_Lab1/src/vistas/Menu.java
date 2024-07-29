@@ -31,7 +31,9 @@ public class Menu extends javax.swing.JFrame {
         jmSocios = new javax.swing.JMenu();
         jmMembresias = new javax.swing.JMenu();
         jmEntrenadores = new javax.swing.JMenu();
+        jmiGestionEntrenadores = new javax.swing.JMenuItem();
         jmClases = new javax.swing.JMenu();
+        jmiGestionClases = new javax.swing.JMenuItem();
         jmAsistencia = new javax.swing.JMenu();
         jmiTomarAsistencia = new javax.swing.JMenuItem();
         jmiAsistenciaPorSocio = new javax.swing.JMenuItem();
@@ -56,9 +58,27 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jmMembresias);
 
         jmEntrenadores.setText("Entrenadores");
+
+        jmiGestionEntrenadores.setText("Gestionar Entrenadores");
+        jmiGestionEntrenadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGestionEntrenadoresActionPerformed(evt);
+            }
+        });
+        jmEntrenadores.add(jmiGestionEntrenadores);
+
         jMenuBar1.add(jmEntrenadores);
 
         jmClases.setText("Clases");
+
+        jmiGestionClases.setText("Gestionar Clases");
+        jmiGestionClases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGestionClasesActionPerformed(evt);
+            }
+        });
+        jmClases.add(jmiGestionClases);
+
         jMenuBar1.add(jmClases);
 
         jmAsistencia.setText("Asistencia");
@@ -112,6 +132,26 @@ public class Menu extends javax.swing.JFrame {
         escritorio.moveToFront(tomarAsistencia);
     }//GEN-LAST:event_jmiTomarAsistenciaActionPerformed
 
+    private void jmiGestionEntrenadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGestionEntrenadoresActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionEntrenadores gestionEntrenadores = new GestionEntrenadores();
+        gestionEntrenadores.setVisible(true);
+        escritorio.add(gestionEntrenadores);
+        escritorio.moveToFront(gestionEntrenadores);
+    }//GEN-LAST:event_jmiGestionEntrenadoresActionPerformed
+
+    private void jmiGestionClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGestionClasesActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionClases gestionClases = new GestionClases();
+        gestionClases.setVisible(true);
+        escritorio.add(gestionClases);
+        escritorio.moveToFront(gestionClases);
+    }//GEN-LAST:event_jmiGestionClasesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -156,6 +196,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jmMembresias;
     private javax.swing.JMenu jmSocios;
     private javax.swing.JMenuItem jmiAsistenciaPorSocio;
+    private javax.swing.JMenuItem jmiGestionClases;
+    private javax.swing.JMenuItem jmiGestionEntrenadores;
     private javax.swing.JMenuItem jmiTomarAsistencia;
     // End of variables declaration//GEN-END:variables
 }

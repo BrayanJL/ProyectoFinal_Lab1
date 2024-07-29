@@ -18,11 +18,31 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Entrenadores"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiGestionEntrenadores">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gestionar Entrenadores"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGestionEntrenadoresActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmClases">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clases"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiGestionClases">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gestionar Clases"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGestionClasesActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmAsistencia">
           <Properties>

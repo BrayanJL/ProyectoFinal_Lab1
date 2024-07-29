@@ -14,8 +14,8 @@ public class EntrenadorData {
     }
     
     public void guardarEntrenador(Entrenador entrenador) {
-        String sql = "INSERT INTO entrenador (DNI, Nombre, Apellido, Especialidad, Disponibilidad, estado) "
-                + "VALUES ( ? , ? , ? , ? , ? , ? )";
+        String sql = "INSERT INTO entrenador (DNI, Nombre, Apellido, Especialidad, estado) "
+                + "VALUES ( ? , ? , ? , ? , ? )";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -23,8 +23,7 @@ public class EntrenadorData {
             ps.setString(2, entrenador.getNombre());
             ps.setString(3, entrenador.getApellido());
             ps.setString(4, entrenador.getEspecialidad());
-            ps.setString(5, entrenador.getDisponibilidad());
-            ps.setBoolean(6, entrenador.isEstado());
+            ps.setBoolean(5, entrenador.isEstado());
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -59,7 +58,6 @@ public class EntrenadorData {
                 entrenador.setNombre(rs.getString("Nombre"));
                 entrenador.setApellido(rs.getString("Apellido"));
                 entrenador.setEspecialidad(rs.getString("Especialidad"));
-                entrenador.setDisponibilidad(rs.getString("Disponibilidad"));
                 entrenador.setEstado(rs.getBoolean("estado"));
                 
             } //else JOptionPane.showMessageDialog(null, "No existe el entrenador con el ID que solicito");
@@ -90,7 +88,6 @@ public class EntrenadorData {
                 entrenador.setNombre(rs.getString("Nombre"));
                 entrenador.setApellido(rs.getString("Apellido"));
                 entrenador.setEspecialidad(rs.getString("Especialidad"));
-                entrenador.setDisponibilidad(rs.getString("Disponibilidad"));
                 entrenador.setEstado(rs.getBoolean("estado"));
                 
             } //else JOptionPane.showMessageDialog(null, "No existe el entrenador con el DNI que solicito");
@@ -118,7 +115,6 @@ public class EntrenadorData {
                 entrenador.setNombre(rs.getString("Nombre"));
                 entrenador.setApellido(rs.getString("Apellido"));
                 entrenador.setEspecialidad(rs.getString("Especialidad"));
-                entrenador.setDisponibilidad(rs.getString("Disponibilidad"));
                 entrenador.setEstado(rs.getBoolean("estado"));
                 entrenadores.add(entrenador);
             }
@@ -138,9 +134,20 @@ public class EntrenadorData {
         return entrenadores;
     }
     
+    public List<Entrenador> listarEntrenadoresNoActivos() {
+        List<Entrenador> entrenadores = listarEntrenadores();
+        entrenadores.removeIf(entrenador -> entrenador.isEstado());
+        
+        return entrenadores;
+    }
+    
     public void modificarEntrenador(Entrenador entrenador) {
         
-        String sql = "UPDATE entrenador SET DNI = ? , Nombre = ? , Apellido = ? , Especialidad = ? , Disponibilidad = ? , Estado = ? "
+        if (dniRepetido( entrenador) == false) {
+            return;
+        }
+        
+        String sql = "UPDATE entrenador SET DNI = ? , Nombre = ? , Apellido = ? , Especialidad = ? "
                 + "WHERE ID_Entrenador = ? ";
         
         PreparedStatement ps = null;
@@ -152,9 +159,7 @@ public class EntrenadorData {
             ps.setString(2, entrenador.getNombre());
             ps.setString(3, entrenador.getApellido());
             ps.setString(4, entrenador.getEspecialidad());
-            ps.setString(5, entrenador.getDisponibilidad());
-            ps.setBoolean(6, entrenador.isEstado());
-            ps.setInt(7, entrenador.getIdEntrenador());
+            ps.setInt(5, entrenador.getIdEntrenador());
             
             
             int exito = ps.executeUpdate();
@@ -170,14 +175,36 @@ public class EntrenadorData {
         }
     }
     
-    public void eliminarEntrenador(int dni) {
+    private boolean dniRepetido(Entrenador entrenador) {
+        String sql = "SELECT * FROM entrenador WHERE ID_Entrenador != ? and DNI = ?";
+        PreparedStatement ps = null;
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, entrenador.getIdEntrenador());
+            ps.setInt(2, entrenador.getDni());
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Ya existe un entrenador con este DNI");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador "+e.getMessage());
+        }
+        return true;
+    }
+    
+    public void deshabilitarEntrenador(int dni) {
         try {
             String sql = "UPDATE entrenador SET estado = 0 WHERE DNI = ? ";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             int fila = ps.executeUpdate();
             if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Se elimino el entrenador");
+                JOptionPane.showMessageDialog(null, "El entrenador ha sido deshabilitado");
             } else {
                 JOptionPane.showMessageDialog(null, "El entrenador no existe");
             }
@@ -185,6 +212,22 @@ public class EntrenadorData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador " + e.getMessage());
         }
+    }
+    
+    public void habilitarEntrenador(int dni) {
+        try {
+            String sql = "UPDATE entrenador SET estado = 1 WHERE DNI = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            int fila = ps.executeUpdate();
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, "El entrenador ha sido habilitado");
+            } else {
+                JOptionPane.showMessageDialog(null, "El entrenador no existe");
+            }
 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador " + e.getMessage());
+        }
     }
 }

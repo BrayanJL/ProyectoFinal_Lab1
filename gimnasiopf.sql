@@ -63,7 +63,6 @@ CREATE TABLE `entrenador` (
   `Nombre` varchar(32) NOT NULL,
   `Apellido` varchar(32) NOT NULL,
   `Especialidad` varchar(64) NOT NULL,
-  `Disponibilidad` varchar(32) NOT NULL,
   `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

@@ -13,9 +13,9 @@ public class PruebasEntrenadorClase {
         
         EntrenadorData ed = new EntrenadorData();
         
-        Entrenador ent = new Entrenador(123456, "Pepe", "Juarez","Pilates","tarde",true);
-        Entrenador ent2 = new Entrenador(234567, "Pipo", "Juarez","Yoga","Mañana",true);
-        Entrenador ent3 = new Entrenador(345678, "Pipi", "Juarez","Calistenia","tarde",true);
+        Entrenador ent = new Entrenador(123456, "Pepe", "Juarez","Pilates",true);
+        Entrenador ent2 = new Entrenador(234567, "Pipo", "Juarez","Yoga",true);
+        Entrenador ent3 = new Entrenador(345678, "Pipi", "Juarez","Calistenia",true);
         
         System.out.println("");
         System.out.println("///////////////////// Guardar Entrenador:");
@@ -58,7 +58,7 @@ public class PruebasEntrenadorClase {
         System.out.println("///////////////////// Eliminar entrenador:");
         System.out.println("");
         
-        ed.eliminarEntrenador(123455);
+        ed.deshabilitarEntrenador(123455);
         ent = ed.buscarEntrenadorPorDni(123455);
         
         for (Entrenador entrenador : ed.listarEntrenadores()) {
@@ -151,7 +151,7 @@ public class PruebasEntrenadorClase {
         System.out.println("///////////////////// Listar clases válidas otra vez:");
         System.out.println("");
         
-        ed.eliminarEntrenador(ent2.getDni());
+        ed.deshabilitarEntrenador(ent2.getDni());
         ent2 = ed.buscarEntrenador(ent2.getIdEntrenador());
         
         for (Clase cl : cd.listarClasesValidas()) {
