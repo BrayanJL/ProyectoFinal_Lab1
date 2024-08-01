@@ -184,7 +184,6 @@ public class ClaseData {
         }
     }
     
-    
     public void habilitarClase(int idClase) {
         try {
             String sql = "UPDATE clase SET estado = 1 WHERE ID_Clase = ? ";
@@ -201,7 +200,6 @@ public class ClaseData {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Clase " + e.getMessage());
         }
     }
-    
     
     public void eliminarClase(int idClase) {
         try {

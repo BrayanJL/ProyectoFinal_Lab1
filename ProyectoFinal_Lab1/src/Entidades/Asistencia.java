@@ -18,12 +18,12 @@ public class Asistencia {
         this.fechaAsistencia = fechaAsistencia;
     }
 
-    public Asistencia(Socio idSocio, Clase idClase, LocalDate fechaAsistencia) {
-        this.socio = idSocio;
-        this.clase = idClase;
+    public Asistencia(Socio socio, Clase clase, LocalDate fechaAsistencia) {
+        this.socio = socio;
+        this.clase = clase;
         this.fechaAsistencia = fechaAsistencia;
     }
-
+    
     public int getIdAsistencia() {
         return idAsistencia;
     }

@@ -4,11 +4,14 @@
  */
 package vistas;
 
+import AccesoADatos.AsistenciaData;
 import AccesoADatos.ClaseData;
 import AccesoADatos.MembresiaData;
 import AccesoADatos.SocioData;
+import Entidades.Asistencia;
 import Entidades.Clase;
 import Entidades.Socio;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,10 +32,12 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
     SocioData socioData = new SocioData();
     
     MembresiaData membresiaData = new MembresiaData();
+    AsistenciaData asistenciaData = new AsistenciaData();
+    
     
     public TomarAsistencia() {
         initComponents();
-        modeloClase = (DefaultTableModel)jtMaterias.getModel();
+        modeloClase = (DefaultTableModel)jtClases.getModel();
         jbListarClasesActionPerformed(null);
         
         modeloSocio = (DefaultTableModel)jtSocios.getModel();
@@ -66,7 +71,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         jbListarClases = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtMaterias = new javax.swing.JTable();
+        jtClases = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jlSocio = new javax.swing.JLabel();
         jlIdSocioText = new javax.swing.JLabel();
@@ -81,7 +86,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtSocios = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        jbAgregarAsistencia = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,7 +137,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
             }
         });
 
-        jtMaterias.setModel(new javax.swing.table.DefaultTableModel(
+        jtClases.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -155,13 +160,13 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtMaterias.setColumnSelectionAllowed(true);
-        jtMaterias.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jtMaterias);
-        jtMaterias.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jtMaterias.getColumnModel().getColumnCount() > 0) {
-            jtMaterias.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jtMaterias.getColumnModel().getColumn(6).setPreferredWidth(50);
+        jtClases.setColumnSelectionAllowed(true);
+        jtClases.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jtClases);
+        jtClases.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jtClases.getColumnModel().getColumnCount() > 0) {
+            jtClases.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jtClases.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -356,7 +361,12 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jButton4.setText("Agregar Asistencia");
+        jbAgregarAsistencia.setText("Agregar Asistencia");
+        jbAgregarAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarAsistenciaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -370,7 +380,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbAgregarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -381,7 +391,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(jbAgregarAsistencia)
                 .addContainerGap())
         );
 
@@ -453,11 +463,30 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbListarSociosActionPerformed
 
+    private void jbAgregarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarAsistenciaActionPerformed
+        // TODO add your handling code here:
+        int filaClase = jtClases.getSelectedRow();
+        int filaSocio = jtSocios.getSelectedRow();
+        
+        if (filaClase != -1 && filaSocio != -1){
+
+            int idSocio = (int)jtSocios.getValueAt(filaClase, 0);            
+            int idClase = (int)jtClases.getValueAt(filaSocio, 0);
+            
+            Socio socio = socioData.buscarSocio(idSocio);
+            Clase clase = claseData.buscarClase(idClase);
+            LocalDate fecha = LocalDate.now();
+            
+            Asistencia asistencia = new Asistencia (socio,clase,fecha);
+            
+            asistenciaData.guardarAsistencia(asistencia);
+        }
+    }//GEN-LAST:event_jbAgregarAsistenciaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -476,6 +505,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbAgregarAsistencia;
     private javax.swing.JButton jbListarClases;
     private javax.swing.JButton jbListarSocios;
     private javax.swing.JLabel jlDniSocio;
@@ -487,7 +517,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlPasesSocio;
     private javax.swing.JLabel jlPasesSocioText;
     private javax.swing.JLabel jlSocio;
-    private javax.swing.JTable jtMaterias;
+    private javax.swing.JTable jtClases;
     private javax.swing.JTable jtSocios;
     // End of variables declaration//GEN-END:variables
 }
