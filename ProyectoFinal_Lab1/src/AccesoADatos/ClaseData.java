@@ -112,6 +112,14 @@ public class ClaseData {
         return clases;
     }
     
+    public List<Clase> listarClasesValidas() {
+        List<Clase> clases = listarClases();
+        clases.removeIf(clase -> clase.isEstado() == false);
+        clases.removeIf(clase -> clase.getEntrenador().isEstado() == false);
+        
+        return clases;
+    }
+    
     public List<Clase> listarClasesInactivas() {
         List<Clase> clases = listarClases();
         clases.removeIf(clase -> clase.isEstado() == true);
@@ -202,11 +210,7 @@ public class ClaseData {
         }
     }
     
-<<<<<<< Updated upstream
-    public void eliminarClase(int idClase) {
-=======
     public void deshabilitarClase(int idClase) {
->>>>>>> Stashed changes
         try {
             String sql = "UPDATE clase SET estado = 0 WHERE ID_Clase = ? ";
             PreparedStatement ps = con.prepareStatement(sql);
