@@ -337,28 +337,25 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlIdSocioText" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                      <Component id="jlIdSocio" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace pref="48" max="-2" attributes="0"/>
+                                      <Component id="jlSocio" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jlNombreSocioText" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jlPasesSocioText" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jlDniSocioText" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlIdSocioText" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jlIdSocio" min="-2" max="-2" attributes="0"/>
                                           <Component id="jlDniSocio" min="-2" max="-2" attributes="0"/>
                                           <Component id="jlNombreSocio" min="-2" max="-2" attributes="0"/>
                                           <Component id="jlPasesSocio" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace pref="48" max="-2" attributes="0"/>
-                                      <Component id="jlSocio" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="270" max="32767" attributes="0"/>

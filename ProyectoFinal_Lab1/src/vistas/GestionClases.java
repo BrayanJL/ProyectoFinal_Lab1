@@ -4,6 +4,17 @@
  */
 package vistas;
 
+import AccesoADatos.ClaseData;
+import AccesoADatos.EntrenadorData;
+import Entidades.Clase;
+import Entidades.Entrenador;
+import java.awt.Color;
+import java.time.LocalTime;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Zully
@@ -13,10 +24,36 @@ public class GestionClases extends javax.swing.JInternalFrame {
     /**
      * Creates new form GestionClases
      */
+    
+    private DefaultTableModel modeloClase;
+    private DefaultTableModel modeloEntrenador;
+    private ClaseData claseData = new ClaseData();
+    private EntrenadorData entrenadorData = new EntrenadorData();
+    private Clase claseActual = null;
+    private Entrenador entrenadorActual = null;
+    
     public GestionClases() {
         initComponents();
+        modeloClase = (DefaultTableModel) jtClase.getModel();
+        modeloEntrenador = (DefaultTableModel) jtEntrenador.getModel();
+        llenarTablaClase();
+        llenarTablaEntrenador();
+        cargarClases();
+        cargarEntrenadores();
     }
-
+    
+    private void cargarClases() {
+        jcbClase.addItem("Listar Todas Las Clases");
+        jcbClase.addItem("Listar Clases Activas");
+        jcbClase.addItem("Listar Clases Inactivas");
+    }
+    
+    private void cargarEntrenadores() {
+        jcbEntrenador.addItem("Listar Todos Los Entrenadores");
+        jcbEntrenador.addItem("Listar Entrenadores Activos");
+        jcbEntrenador.addItem("Listar Entrenadores Inactivos");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +63,992 @@ public class GestionClases extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jlNombre = new javax.swing.JLabel();
+        jtfNombre = new javax.swing.JTextField();
+        jlEstado = new javax.swing.JLabel();
+        jtfEstado = new javax.swing.JTextField();
+        jlHorario = new javax.swing.JLabel();
+        jlCapacidad = new javax.swing.JLabel();
+        jtfCapacidad = new javax.swing.JTextField();
+        jsHoras = new javax.swing.JSpinner();
+        jlHoras = new javax.swing.JLabel();
+        jsMinutos = new javax.swing.JSpinner();
+        jlMinutos = new javax.swing.JLabel();
+        jlEntrenadorDeLaClase = new javax.swing.JLabel();
+        jtfNombreEntrenador = new javax.swing.JTextField();
+        jtfEstadoEntrenador = new javax.swing.JTextField();
+        jlNombreEntrenador = new javax.swing.JLabel();
+        jlEstadoEntrenador = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jbAgregar = new javax.swing.JButton();
+        jbModificar = new javax.swing.JButton();
+        jbDeshabilitar = new javax.swing.JButton();
+        jlClase = new javax.swing.JLabel();
+        jlOpciones = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtEntrenador = new javax.swing.JTable();
+        jcbEntrenador = new javax.swing.JComboBox<>();
+        jlEntrenadores = new javax.swing.JLabel();
+        jbBuscarEntrenador = new javax.swing.JButton();
+        jtfBusquedaEntrenador = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtClase = new javax.swing.JTable();
+        jcbClase = new javax.swing.JComboBox<>();
+        jlClases = new javax.swing.JLabel();
+        jbBuscarClase = new javax.swing.JButton();
+        jtfBusquedaClase = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+
+        jPanel1.setBackground(new java.awt.Color(181, 181, 181));
+
+        jlNombre.setText("Nombre");
+
+        jtfNombre.setEditable(false);
+
+        jlEstado.setText("Estado");
+
+        jtfEstado.setEditable(false);
+        jtfEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfEstadoMouseClicked(evt);
+            }
+        });
+
+        jlHorario.setText("Horario");
+
+        jlCapacidad.setText("Capacidad");
+
+        jtfCapacidad.setEditable(false);
+
+        jsHoras.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+        jsHoras.setEnabled(false);
+
+        jlHoras.setText("Hs");
+
+        jsMinutos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+        jsMinutos.setEnabled(false);
+
+        jlMinutos.setText("Ms");
+
+        jlEntrenadorDeLaClase.setBackground(new java.awt.Color(151, 151, 151));
+        jlEntrenadorDeLaClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlEntrenadorDeLaClase.setText("ENTRENADOR DE ESTA CLASE:");
+        jlEntrenadorDeLaClase.setOpaque(true);
+
+        jtfNombreEntrenador.setEditable(false);
+
+        jtfEstadoEntrenador.setEditable(false);
+
+        jlNombreEntrenador.setText("Nombre");
+
+        jlEstadoEntrenador.setText("Estado");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlNombreEntrenador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtfNombreEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlNombre)
+                            .addComponent(jlCapacidad))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlHorario)
+                    .addComponent(jlEstado)
+                    .addComponent(jlEstadoEntrenador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jsHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlHoras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jsMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlMinutos))
+                    .addComponent(jtfEstadoEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jlEntrenadorDeLaClase, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlHorario)
+                        .addComponent(jsHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlHoras)
+                        .addComponent(jsMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlMinutos)
+                        .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlNombre)
+                        .addGap(4, 4, 4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtfCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlEstado)
+                        .addComponent(jlCapacidad)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlEntrenadorDeLaClase, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlNombreEntrenador)
+                    .addComponent(jtfNombreEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlEstadoEntrenador)
+                    .addComponent(jtfEstadoEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(181, 181, 181));
+
+        jbAgregar.setText("AGREGAR");
+        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarActionPerformed(evt);
+            }
+        });
+
+        jbModificar.setText("MODIFICAR");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
+
+        jbDeshabilitar.setText("DESHABILITAR");
+        jbDeshabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeshabilitarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbDeshabilitar, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbAgregar)
+                .addGap(18, 18, 18)
+                .addComponent(jbModificar)
+                .addGap(18, 18, 18)
+                .addComponent(jbDeshabilitar)
+                .addGap(21, 21, 21))
+        );
+
+        jlClase.setBackground(new java.awt.Color(151, 151, 151));
+        jlClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlClase.setText("CLASE:");
+        jlClase.setOpaque(true);
+
+        jlOpciones.setBackground(new java.awt.Color(151, 151, 151));
+        jlOpciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlOpciones.setText("OPCIONES");
+        jlOpciones.setOpaque(true);
+
+        jPanel3.setBackground(new java.awt.Color(181, 181, 181));
+
+        jtEntrenador.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID_Entrenador", "DNI", "Nombre", "Apellido", "Especialidad", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtEntrenador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jtEntrenadorMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtEntrenador);
+
+        jcbEntrenador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEntrenadorActionPerformed(evt);
+            }
+        });
+
+        jlEntrenadores.setBackground(new java.awt.Color(151, 151, 151));
+        jlEntrenadores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlEntrenadores.setText("ENTRENADORES");
+        jlEntrenadores.setOpaque(true);
+
+        jbBuscarEntrenador.setText("Buscar Por Nombre");
+        jbBuscarEntrenador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarEntrenadorActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlEntrenadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jcbEntrenador, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jtfBusquedaEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbBuscarEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jlEntrenadores)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcbEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbBuscarEntrenador)
+                    .addComponent(jtfBusquedaEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel4.setBackground(new java.awt.Color(181, 181, 181));
+
+        jtClase.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID_Clase", "ID_Entrenador", "Horario", "Nombre", "Capacidad", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtClase.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jtClaseMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtClase);
+
+        jcbClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbClaseActionPerformed(evt);
+            }
+        });
+
+        jlClases.setBackground(new java.awt.Color(151, 151, 151));
+        jlClases.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlClases.setText("CLASES");
+        jlClases.setOpaque(true);
+
+        jbBuscarClase.setText("Buscar Por Nombre");
+        jbBuscarClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarClaseActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlClases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jcbClase, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jtfBusquedaClase)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbBuscarClase, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jlClases)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcbClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbBuscarClase)
+                    .addComponent(jtfBusquedaClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlClase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlClase)
+                    .addComponent(jlOpciones))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
+        if (jtEntrenador.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un entrenador "
+                    + "de la tabla ENTRENADORES");
+            return;
+        }
+        
+        if (jbAgregar.getText().equals("AGREGAR")){
+            reestablecerControles();
+            camposEditables();
+ 
+            jtfEstado.setText("Inactivo (Pulse Aquí)");
+            jtfEstado.setBackground(Color.PINK);
+            jlClase.setText("Llene los campos con los datos de la nueva clase");
+            jlClase.setForeground(Color.BLUE);
+            jtfNombre.requestFocusInWindow();
+            jbAgregar.setText("GUARDAR CAMBIOS");
+        }
+        else if (validacionFormulario()){
+            setearClase();
+            claseData.guardarClase(claseActual);
+            reestablecerControles();
+            llenarTablaClase();
+            jtfNombreEntrenador.setText("");
+            jtfEstadoEntrenador.setText("");
+            jtEntrenador.clearSelection();
+        }
+    }//GEN-LAST:event_jbAgregarActionPerformed
 
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        if (jtClase.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una clase "
+                    + "de la tabla CLASES");
+            return;
+        }
+        
+        if (jbModificar.getText().equals("MODIFICAR")) {
+            reestablecerControles();
+            camposEditables();
+            jtfEstado.setEnabled(false);
+            
+            jlClase.setText("Llene los campos con los nuevos datos de la clase");
+            jlClase.setForeground(Color.BLUE);
+            
+            jlNombreEntrenador.setText("DNI");
+            jtfNombreEntrenador.setText("");
+            jtfNombreEntrenador.setEditable(true);
+            
+            jlEstadoEntrenador.setVisible(false);
+            jtfEstadoEntrenador.setVisible(false);
+       
+            jbModificar.setText("GUARDAR CAMBIOS");
+        }
+        else if(validacionFormulario()) {
+            int fila = jtClase.getSelectedRow();
+            int id = (int) modeloClase.getValueAt(fila, 0);
+            setearClase();
+            claseActual.setIdClase(id);
+            claseData.modificarClase(claseActual);
+            llenarTablaClase();
+            reestablecerControles();
+            jtfNombreEntrenador.setText("");
+            jtfEstadoEntrenador.setText("");
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jbDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeshabilitarActionPerformed
+        if (!jbModificar.getText().equals("MODIFICAR") || jtClase.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una clase "
+                    + "de la tabla CLASES");
+            return;
+        }
+        
+        if (jbDeshabilitar.getText().equals("DESHABILITAR")) {
+            int fila = jtClase.getSelectedRow();
+            claseData.deshabilitarClase((int) modeloClase.getValueAt(fila, 0));
+            claseActual = claseData.buscarClase((int) modeloClase.getValueAt(fila, 0));
+            llenarCampos();
+            llenarTablaClase();
+        }
+        else {
+            int fila = jtClase.getSelectedRow();
+            claseData.habilitarClase((int) modeloClase.getValueAt(fila, 0));
+            claseActual = claseData.buscarClase((int) modeloClase.getValueAt(fila, 0));
+            llenarCampos();
+            llenarTablaClase();
+        }
+    }//GEN-LAST:event_jbDeshabilitarActionPerformed
+
+    private void jcbClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClaseActionPerformed
+        int eleccion = jcbClase.getSelectedIndex();
+        
+        switch (eleccion) {
+            case 0: llenarTablaClase();
+            return;
+            case 1: llenarTablaClasesActivas();
+            return;
+            case 2: llenarTablaClasesInactivas();
+        }
+    }//GEN-LAST:event_jcbClaseActionPerformed
+
+    private void jcbEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEntrenadorActionPerformed
+        int eleccion = jcbEntrenador.getSelectedIndex();
+        
+        switch (eleccion) {
+            case 0: llenarTablaEntrenador();
+            return;
+            case 1: llenarTablaEntrenadoresActivos();
+            return;
+            case 2: llenarTablaEntrenadoresInactivos();
+        }
+    }//GEN-LAST:event_jcbEntrenadorActionPerformed
+
+    private void jtfEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfEstadoMouseClicked
+        if (jbAgregar.getText().equals("GUARDAR CAMBIOS")) {
+            if (jbAgregar.getText().equals("GUARDAR CAMBIOS")); {
+                if (jtfEstado.getText().equals("Activo (Pulse Aquí)")) {
+                    jtfEstado.setText("Inactivo (Pulse Aquí)");
+                    jtfEstado.setBackground(Color.PINK);
+                }
+                else {
+                    jtfEstado.setText("Activo (Pulse Aquí)");
+                    jtfEstado.setBackground(Color.GREEN);
+                }
+            }
+        } 
+    }//GEN-LAST:event_jtfEstadoMouseClicked
+
+    private void jtClaseMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtClaseMouseReleased
+        
+        if (jtClase.getSelectedRowCount() > 1) {
+            jtClase.clearSelection();
+        }
+        
+        if (jtClase.getSelectedRow() != -1) {
+            jtEntrenador.clearSelection();
+            
+            reestablecerControles();
+            int fila = jtClase.getSelectedRow();
+            claseActual = claseData.buscarClase((int) modeloClase.getValueAt(fila, 0));
+            llenarCampos();
+        }   
+    }//GEN-LAST:event_jtClaseMouseReleased
+
+    private void jtEntrenadorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEntrenadorMouseReleased
+        
+        if (jtEntrenador.getSelectedRowCount() > 1) {
+            jtEntrenador.clearSelection();
+        }
+        
+        if (jtEntrenador.getSelectedRow() != -1) {
+            jtClase.clearSelection();
+            
+            reestablecerControles();
+            int fila = jtEntrenador.getSelectedRow();
+            entrenadorActual = entrenadorData.buscarEntrenador((int) modeloEntrenador.getValueAt(fila, 0));
+            jtfNombreEntrenador.setText(entrenadorActual.getNombre() + " " + entrenadorActual.getApellido());
+        
+            if (entrenadorActual.isEstado()) {
+                jtfEstadoEntrenador.setText("Activo");
+            }
+            else {
+                jtfEstadoEntrenador.setText("Inactivo");
+            }
+        }
+    }//GEN-LAST:event_jtEntrenadorMouseReleased
+
+    private void jbBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarClaseActionPerformed
+        List<Clase> clases;
+        int eleccion = jcbClase.getSelectedIndex();
+        
+        switch (eleccion) {
+            case 0: llenarTablaClasePorNombre(claseData.listarClases());
+            return;
+            case 1: llenarTablaClasePorNombre(claseData.listarClasesActivas());
+            return;
+            case 2: llenarTablaClasePorNombre(claseData.listarClasesInactivas());
+        }
+    }//GEN-LAST:event_jbBuscarClaseActionPerformed
+
+    private void jbBuscarEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarEntrenadorActionPerformed
+        int eleccion = jcbEntrenador.getSelectedIndex();
+        
+        switch (eleccion) {
+            case 0: llenarTablaEntrenadorPorNombre(entrenadorData.listarEntrenadores());
+            return;
+            case 1: llenarTablaEntrenadorPorNombre(entrenadorData.listarEntrenadoresActivos());
+            return;
+            case 2: llenarTablaEntrenadorPorNombre(entrenadorData.listarEntrenadoresInactivos());
+        }
+    }//GEN-LAST:event_jbBuscarEntrenadorActionPerformed
+
+    private void setearClase() {
+        if (!jbModificar.getText().equals("MODIFICAR")) {
+            int dni = Integer.parseInt(jtfNombreEntrenador.getText());
+            entrenadorActual = entrenadorData.buscarEntrenadorPorDni(dni);
+        }
+        else{
+            int fila = jtEntrenador.getSelectedRow();
+            entrenadorActual = entrenadorData.buscarEntrenador((int) modeloEntrenador.getValueAt(fila, 0));
+        }
+        
+        LocalTime horario = obtenerHorario();
+        String nombre = jtfNombre.getText();
+        int capacidad = Integer.parseInt(jtfCapacidad.getText());
+        boolean estado = jtfEstado.getText().equals("Activo (Pulse Aquí)");
+        
+        claseActual = new Clase(entrenadorActual, horario, nombre, capacidad, estado);
+    }
+    
+    private LocalTime obtenerHorario() {
+        LocalTime horario;
+        String h = "";
+        
+        if ((int) jsHoras.getValue() < 10) {
+            h += "0" + String.valueOf(jsHoras.getValue()) + ":";
+        }
+        else {
+            h += String.valueOf(jsHoras.getValue()) + ":";
+        }
+        
+        if ((int) jsMinutos.getValue() < 10) {
+            h += "0" + String.valueOf(jsMinutos.getValue());
+        }
+        else {
+            h += String.valueOf(jsMinutos.getValue());
+        }
+        
+        return horario = LocalTime.parse(h);
+    }
+    
+    private void cargarHorario(LocalTime horario) {
+        String horas = String.valueOf(horario).substring(0, 2);
+        String minutos = String.valueOf(horario).substring(3);
+        int hora = Integer.parseInt(horas);
+        int minuto = Integer.parseInt(minutos);
+        
+        jsHoras.setModel(new SpinnerNumberModel(hora,0,24,1));
+        jsMinutos.setModel(new SpinnerNumberModel(minuto,0,60,1));
+    }
+    
+    private void reestablecerControles() {
+        jlClase.setText("CLASE:");
+        jlClase.setForeground(Color.BLACK);
+        jtfEstado.setBackground(Color.WHITE);
+        jtfEstado.setEnabled(true);
+        jbAgregar.setText("AGREGAR");
+        jbModificar.setText("MODIFICAR");
+        
+        jlNombreEntrenador.setText("Nombre");
+        jtfNombreEntrenador.setEditable(false);
+        
+        jlEstadoEntrenador.setVisible(true);
+        jtfEstadoEntrenador.setVisible(true);
+        
+        limpiarCampos();
+        camposNoEditables();
+    }
+    
+    private void limpiarCampos() {
+        jtfNombre.setText("");
+        jtfCapacidad.setText("");
+        jsHoras.setValue(0);
+        jsMinutos.setValue(0);
+        jtfEstado.setText("");
+    }
+    
+    private void llenarCampos() {
+        jtfNombre.setText(claseActual.getNombre());
+        cargarHorario(claseActual.getHorario());
+        jtfCapacidad.setText(String.valueOf(claseActual.getCapacidad()));
+        
+        if (claseActual.isEstado()) {
+            jtfEstado.setText("Activo");
+            jbDeshabilitar.setText("DESHABILITAR");
+        }
+        else {
+            jtfEstado.setText("Inactivo");
+            jbDeshabilitar.setText("HABILITAR");
+        }
+        
+        entrenadorActual = entrenadorData.buscarEntrenador(claseActual.getIdEntrenador());
+        jtfNombreEntrenador.setText(entrenadorActual.getNombre() + " " + entrenadorActual.getApellido());
+        
+        if (entrenadorActual.isEstado()) {
+            jtfEstadoEntrenador.setText("Activo");
+        }
+        else {
+            jtfEstadoEntrenador.setText("Inactivo");
+        }
+    }
+    
+    private void camposEditables() {
+        jtfNombre.setEditable(true);
+        jtfCapacidad.setEditable(true);
+        jsHoras.setEnabled(true);
+        jsMinutos.setEnabled(true);
+    }
+
+    private void camposNoEditables() {
+        jtfNombre.setEditable(false);
+        jtfCapacidad.setEditable(false);
+        jsHoras.setEnabled(false);
+        jsMinutos.setEnabled(false);
+    }
+    
+    private void limpiarTablaClase() {
+        for (int i = modeloClase.getRowCount(); i>0; i--)
+            modeloClase.removeRow(0);
+    }
+    
+    private void limpiarTablaEntrenador(){
+        for (int i = modeloEntrenador.getRowCount(); i>0; i--)
+            modeloEntrenador.removeRow(0);
+    }
+    
+    private void llenarTablaClase() {
+        limpiarTablaClase();
+        List<Clase> clases;
+        clases = claseData.listarClases();
+        
+        for (Clase c : clases) {
+            modeloClase.addRow(new Object[] {
+                c.getIdClase(),
+                c.getIdEntrenador(),
+                c.getHorario(),
+                c.getNombre(),
+                c.getCapacidad(),
+                c.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaClasesActivas() {
+        limpiarTablaClase();
+        List<Clase> clases;
+        clases = claseData.listarClasesActivas();
+        
+        for (Clase c : clases) {
+            modeloClase.addRow(new Object[] {
+                c.getIdClase(),
+                c.getIdEntrenador(),
+                c.getHorario(),
+                c.getNombre(),
+                c.getCapacidad(),
+                c.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaClasesInactivas() {
+        limpiarTablaClase();
+        List<Clase> clases;
+        clases = claseData.listarClasesInactivas();
+        
+        for (Clase c : clases) {
+            modeloClase.addRow(new Object[] {
+                c.getIdClase(),
+                c.getIdEntrenador(),
+                c.getHorario(),
+                c.getNombre(),
+                c.getCapacidad(),
+                c.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaClasePorNombre(List<Clase> listaClases) {
+        limpiarTablaClase();
+        String tx = jtfBusquedaClase.getText().toLowerCase();
+        listaClases.removeIf(clase -> !clase.getNombre().toLowerCase().startsWith(tx));
+        
+        for (Clase c : listaClases) {
+            modeloClase.addRow(new Object[] {
+                c.getIdClase(),
+                c.getIdEntrenador(),
+                c.getHorario(),
+                c.getNombre(),
+                c.getCapacidad(),
+                c.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaEntrenador() {
+        limpiarTablaEntrenador();
+        List<Entrenador> entrenadores;
+        entrenadores = entrenadorData.listarEntrenadores();
+        
+        for (Entrenador e : entrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaEntrenadoresActivos() {
+        limpiarTablaEntrenador();
+        List<Entrenador> entrenadores;
+        entrenadores = entrenadorData.listarEntrenadoresActivos();
+        
+        for (Entrenador e : entrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaEntrenadoresInactivos() {
+        limpiarTablaEntrenador();
+        List<Entrenador> entrenadores;
+        entrenadores = entrenadorData.listarEntrenadoresInactivos();
+        
+        for (Entrenador e : entrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
+    private void llenarTablaEntrenadorPorNombre(List<Entrenador> listaEntrenadores) {
+        limpiarTablaEntrenador();
+        String tx = jtfBusquedaEntrenador.getText().toLowerCase();
+        listaEntrenadores.removeIf(entrenador -> !entrenador.getNombre().toLowerCase().startsWith(tx));
+        
+        for (Entrenador e : listaEntrenadores) {
+            modeloEntrenador.addRow(new Object[]{
+                e.getIdEntrenador(),
+                e.getDni(),
+                e.getNombre(),
+                e.getApellido(),
+                e.getEspecialidad(),
+                e.isEstado()
+            });
+        }
+    }
+    
+    private boolean validacionFormulario() {
+        if (!validacionNombre()) {
+            return false;
+        }
+        if (!validacionCapacidad()) {
+            return false;
+        }
+        
+        if(!jbModificar.getText().equals("MODIFICAR")) {
+            if (!validacionDNI()) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private boolean validacionNombre() {
+        if (jtfNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo Nombre vacío.");
+            jtfNombre.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validacionCapacidad() {
+        if (jtfCapacidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo Capacidad vacío.");
+            jtfCapacidad.requestFocusInWindow();
+            return false;
+        }
+        
+        try{        
+            Integer.parseInt(jtfCapacidad.getText());
+        }catch(Exception nfe){
+            JOptionPane.showMessageDialog(this, "El campo Capacidad debe ser un nro.");
+            return false;
+        }
+        
+        if (Integer.parseInt(jtfCapacidad.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "El campo Capacidad debe ser un nro positivo.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private boolean validacionDNI() {
+        if(jtfNombreEntrenador.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo DNI vacío.");
+            jtfNombreEntrenador.requestFocusInWindow();
+            return false;
+        }
+        
+        try{        
+            Integer.parseInt(jtfNombreEntrenador.getText());
+        }catch(Exception nfe){
+            JOptionPane.showMessageDialog(this, "El DNI debe ser un nro.");
+            jtfNombreEntrenador.requestFocusInWindow();
+            return false;
+        }
+        
+        if (Integer.parseInt(jtfNombreEntrenador.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "El DNI debe ser un nro positivo.");
+            jtfNombreEntrenador.requestFocusInWindow();
+            return false;
+        }
+        
+        int dni = Integer.parseInt(jtfNombreEntrenador.getText());
+        if (entrenadorData.buscarEntrenadorPorDni(dni) == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró ningun entrenador con este DNI");
+            jtfNombreEntrenador.requestFocusInWindow();
+            return false;
+        }
+        
+        return true;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton jbAgregar;
+    private javax.swing.JButton jbBuscarClase;
+    private javax.swing.JButton jbBuscarEntrenador;
+    private javax.swing.JButton jbDeshabilitar;
+    private javax.swing.JButton jbModificar;
+    private javax.swing.JComboBox<String> jcbClase;
+    private javax.swing.JComboBox<String> jcbEntrenador;
+    private javax.swing.JLabel jlCapacidad;
+    private javax.swing.JLabel jlClase;
+    private javax.swing.JLabel jlClases;
+    private javax.swing.JLabel jlEntrenadorDeLaClase;
+    private javax.swing.JLabel jlEntrenadores;
+    private javax.swing.JLabel jlEstado;
+    private javax.swing.JLabel jlEstadoEntrenador;
+    private javax.swing.JLabel jlHorario;
+    private javax.swing.JLabel jlHoras;
+    private javax.swing.JLabel jlMinutos;
+    private javax.swing.JLabel jlNombre;
+    private javax.swing.JLabel jlNombreEntrenador;
+    private javax.swing.JLabel jlOpciones;
+    private javax.swing.JSpinner jsHoras;
+    private javax.swing.JSpinner jsMinutos;
+    private javax.swing.JTable jtClase;
+    private javax.swing.JTable jtEntrenador;
+    private javax.swing.JTextField jtfBusquedaClase;
+    private javax.swing.JTextField jtfBusquedaEntrenador;
+    private javax.swing.JTextField jtfCapacidad;
+    private javax.swing.JTextField jtfEstado;
+    private javax.swing.JTextField jtfEstadoEntrenador;
+    private javax.swing.JTextField jtfNombre;
+    private javax.swing.JTextField jtfNombreEntrenador;
     // End of variables declaration//GEN-END:variables
 }

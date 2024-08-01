@@ -3,6 +3,7 @@ package AccesoADatos;
 
 import Entidades.Clase;
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,44 +18,34 @@ public class ClaseData {
     }
     
     public void guardarClase(Clase clase) {
-        boolean ok1 = clase.getEntrenador().isEstado();
-        boolean ok2 = clase.isEstado();
+
+        if (horarioRepetido(clase)) {
+            return;
+        }
         
-        
-        if (ok1 && ok2) {
-            String sql = "INSERT INTO clase (ID_Entrenador, Horario, Nombre, Capacidad, estado) "
+        String sql = "INSERT INTO clase (ID_Entrenador, Horario, Nombre, Capacidad, estado) "
                 + "VALUES ( ? , ? , ? , ? , ?)";
 
-            try {
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, clase.getIdEntrenador());
-                ps.setTime(2, Time.valueOf(clase.getHorario()));
-                ps.setString(3, clase.getNombre());
-                ps.setInt(4, clase.getCapacidad());
-                ps.setBoolean(5, clase.isEstado());
+        try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, clase.getIdEntrenador());
+            ps.setTime(2, Time.valueOf(clase.getHorario()));
+            ps.setString(3, clase.getNombre());
+            ps.setInt(4, clase.getCapacidad());
+            ps.setBoolean(5, clase.isEstado());
 
-                ps.executeUpdate();
-                ResultSet rs = ps.getGeneratedKeys();
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
 
-                if (rs.next()) {
-                    clase.setIdClase(rs.getInt(1));
-                    JOptionPane.showMessageDialog(null, "Se agrego la clase exitosamente");
-                }
-                ps.close();
+            if (rs.next()) {
+                clase.setIdClase(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Se agrego la clase exitosamente");
+            }
+            ps.close();
 
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Clase "+e.getMessage());
-            }
-        }
-        else {
-            if(ok1 == false) {
-                JOptionPane.showMessageDialog(null, "No se puede agregar una clase con un entrenador inactivo");
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Esta clase está inactiva");
-            }
-        }
-        
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Clase "+e.getMessage());
+        }   
     }
     
     public Clase buscarClase(int idClase) {
@@ -114,10 +105,16 @@ public class ClaseData {
         return clases;
     }
     
-    public List<Clase> listarClasesValidas() {
+    public List<Clase> listarClasesActivas() {
         List<Clase> clases = listarClases();
         clases.removeIf(clase -> clase.isEstado() == false);
-        clases.removeIf(clase -> clase.getEntrenador().isEstado() == false);
+        
+        return clases;
+    }
+    
+    public List<Clase> listarClasesInactivas() {
+        List<Clase> clases = listarClases();
+        clases.removeIf(clase -> clase.isEstado() == true);
         
         return clases;
     }
@@ -157,6 +154,10 @@ public class ClaseData {
     
     public void modificarClase(Clase clase) {
         
+        if (horarioInterpuesto(clase)) {
+            return;
+        }
+        
         String sql = "UPDATE clase SET ID_Entrenador = ? , Horario = ? , Nombre = ? , Capacidad = ? "
                 + "WHERE ID_Clase = ? ";
         
@@ -191,7 +192,7 @@ public class ClaseData {
             ps.setInt(1, idClase);
             int fila = ps.executeUpdate();
             if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Se elimino la clase");
+                JOptionPane.showMessageDialog(null, "Se habilitó la clase");
             } else {
                 JOptionPane.showMessageDialog(null, "La clase no existe");
             }
@@ -201,14 +202,18 @@ public class ClaseData {
         }
     }
     
+<<<<<<< Updated upstream
     public void eliminarClase(int idClase) {
+=======
+    public void deshabilitarClase(int idClase) {
+>>>>>>> Stashed changes
         try {
             String sql = "UPDATE clase SET estado = 0 WHERE ID_Clase = ? ";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idClase);
             int fila = ps.executeUpdate();
             if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Se elimino la clase");
+                JOptionPane.showMessageDialog(null, "Se deshabilitó la clase");
             } else {
                 JOptionPane.showMessageDialog(null, "La clase no existe");
             }
@@ -216,5 +221,63 @@ public class ClaseData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Clase " + e.getMessage());
         }
+    }
+    
+    private boolean horarioRepetido(Clase clase) {
+        LocalTime horario = clase.getHorario();
+  
+        String sql = "SELECT * FROM clase "
+                + "WHERE ID_Entrenador = ? AND Horario BETWEEN ? AND ? ";
+        
+        PreparedStatement ps = null;
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, clase.getIdEntrenador());
+            ps.setTime(2, Time.valueOf(horario));
+            ps.setTime(3, Time.valueOf(horario.plusHours(1).minusSeconds(1)));
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El entrenador de esta clase ya tiene "
+                        + "una clase en este horario");
+                return true;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador "+e.getMessage());
+        }
+        return false;
+    }
+    
+    private boolean horarioInterpuesto(Clase clase) {
+        LocalTime horario = clase.getHorario();
+        
+        String sql = "SELECT * FROM clase "
+                + "WHERE ID_Entrenador = ? AND Horario BETWEEN ? AND ? ";
+        
+        PreparedStatement ps = null;
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, clase.getIdEntrenador());
+            ps.setTime(2, Time.valueOf(horario));
+            ps.setTime(3, Time.valueOf(horario.plusHours(1).minusSeconds(1)));
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                if(clase.getIdClase() != rs.getInt("ID_Clase")) {
+                    JOptionPane.showMessageDialog(null, "El entrenador de esta clase ya tiene "
+                        + "una clase en este horario");
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador "+e.getMessage());
+        }
+        return false;
     }
 }

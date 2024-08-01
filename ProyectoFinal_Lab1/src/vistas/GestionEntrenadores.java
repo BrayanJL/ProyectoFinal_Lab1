@@ -24,7 +24,6 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloEntrenador;
     private EntrenadorData entrenadorData = new EntrenadorData();
     private Entrenador entrenadorActual = null;
-    private boolean cambiosHabilitados = false;
     
     public GestionEntrenadores() {
         initComponents();
@@ -71,15 +70,23 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
 
         jlNombre.setText("Nombre");
 
+        jtfNombre.setEditable(false);
+
         jlDNI.setText("DNI");
+
+        jtfDNI.setEditable(false);
 
         jlApellido.setText("Apellido");
 
+        jtfApellido.setEditable(false);
+
         jlEspecialidad.setText("Especialidad");
+
+        jtfEspecialidad.setEditable(false);
 
         jlEstado.setText("Estado");
 
-        jtfEstado.setEnabled(false);
+        jtfEstado.setEditable(false);
 
         jrbEstado.setText("Empezar como activo");
         jrbEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -197,8 +204,8 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
             }
         });
         jtEntrenador.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtEntrenadorMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jtEntrenadorMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jtEntrenador);
@@ -274,30 +281,23 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void cargarEntrenadores() {
+    private void cargarEntrenadores() {
         jcbEntrenador.addItem("Listar Todos Los Entrenadores");
-        jcbEntrenador.addItem("Listar Entrenador Activos");
-        jcbEntrenador.addItem("Listar Entrenador Inactivos");
+        jcbEntrenador.addItem("Listar Entrenadores Activos");
+        jcbEntrenador.addItem("Listar Entrenadores Inactivos");
     }
-    
-    public boolean isCambiosHabilitados() {
-        return cambiosHabilitados;
-    }
-
-    public void setCambiosHabilitados(boolean cambiosHabilitados) {
-        this.cambiosHabilitados = cambiosHabilitados;
-    }
-    
-    
+  
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        if (!isCambiosHabilitados()) {
+        if (jtEntrenador.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar o buscar un entrenador "
                     + "antes de modificarlo");
             return;
         }
         
         if (jbModificar.getText().equals("MODIFICAR")) {
-            reestablecerControles();         
+            reestablecerControles();
+            camposEditables();
+            jtfEstado.setEnabled(false);
             entrenadorActual = entrenadorData.buscarEntrenadorPorDni(entrenadorActual.getDni());
             String id = String.valueOf(entrenadorActual.getIdEntrenador());
   
@@ -306,8 +306,6 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
             jlEntrenador.setForeground(Color.BLUE);
             jtfDNI.requestFocusInWindow();
             jbModificar.setText("GUARDAR CAMBIOS");
-            
-            setCambiosHabilitados(true);
         }
         else if (validacionFormulario()) {
             int id = entrenadorActual.getIdEntrenador();
@@ -320,7 +318,7 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeshabilitarActionPerformed
-        if (!isCambiosHabilitados()) {
+        if (jtEntrenador.getSelectedRow() == -1 || !jbModificar.getText().equals("MODIFICAR")) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar o buscar un entrenador "
                     + "antes de modificarlo");
             return;
@@ -342,7 +340,10 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         if (jbAgregar.getText().equals("AGREGAR")) {
+            jtEntrenador.clearSelection();
             reestablecerControles();
+            camposEditables();
+           
             jlEntrenador.setText("Llene los campos con los datos del entrenador a ingresar");
             jlEntrenador.setForeground(Color.BLUE);
             jtfDNI.requestFocusInWindow();
@@ -372,13 +373,16 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         if (jbBuscar.getText().equals("BUSCAR")){
+            jtEntrenador.clearSelection();
+            
             reestablecerControles();
+            camposDeshabilitados();
+            jtfDNI.setEditable(true);
+            jtfDNI.setEnabled(true);
+            
             jlEntrenador.setText("Escriba el DNI del entrenador que busca");
             jlEntrenador.setForeground(Color.BLUE);
             jtfDNI.requestFocusInWindow();
-            jtfNombre.setEnabled(false);
-            jtfApellido.setEnabled(false);
-            jtfEspecialidad.setEnabled(false);
             jbBuscar.setText("CONFIRMAR BÚSQUEDA");
         }
         else if (validacionDNI()) {
@@ -388,7 +392,18 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
             
             if (entrenadorActual != null) {
                 llenarCampos();
-                setCambiosHabilitados(true);
+                jcbEntrenador.setSelectedIndex(0);
+                llenarTabla();
+                
+                int fila = 0;
+                
+                for (int i = 0; i < modeloEntrenador.getRowCount(); i++) {
+                    if(modeloEntrenador.getValueAt(i, 1).equals(dni)){
+                        fila = i;
+                    }
+                    jtEntrenador.setRowSelectionInterval(fila, fila);
+                }
+                
                 setearEntrenadorConDatosDelFormulario();
             }
             else {
@@ -396,29 +411,6 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
-
-    private void jtEntrenadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEntrenadorMouseClicked
-        if(jtEntrenador.getSelectedRow() != -1) {
-            reestablecerControles();
-            int fila = jtEntrenador.getSelectedRow();
-            jtfDNI.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 1)));
-            jtfNombre.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 2)));
-            jtfApellido.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 3)));
-            jtfEspecialidad.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 4)));
-      
-            if (String.valueOf(modeloEntrenador.getValueAt(fila, 5)).equals("true")) {
-                jtfEstado.setText(String.valueOf("Activo"));
-                jbDeshabilitar.setText("DESHABILITAR");
-            }
-            else {
-                jtfEstado.setText(String.valueOf("Inactivo"));
-                jbDeshabilitar.setText("HABILITAR");
-            }
-           
-            setCambiosHabilitados(true);
-            setearEntrenadorConDatosDelFormulario();
-        }
-    }//GEN-LAST:event_jtEntrenadorMouseClicked
 
     private void jcbEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEntrenadorActionPerformed
         int eleccion = jcbEntrenador.getSelectedIndex();
@@ -433,19 +425,62 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbEntrenadorActionPerformed
 
     private void jbBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarPorNombreActionPerformed
-        List<Entrenador> entrenadores;
         int eleccion = jcbEntrenador.getSelectedIndex();
         
         switch (eleccion) {
-            case 0: llenarTablasPorNombre(entrenadorData.listarEntrenadores());
+            case 0: llenarTablaPorNombre(entrenadorData.listarEntrenadores());
             return;
-            case 1: llenarTablasPorNombre(entrenadorData.listarEntrenadoresActivos());
+            case 1: llenarTablaPorNombre(entrenadorData.listarEntrenadoresActivos());
             return;
-            case 2: llenarTablasPorNombre(entrenadorData.listarEntrenadoresNoActivos());
-            return;
+            case 2: llenarTablaPorNombre(entrenadorData.listarEntrenadoresInactivos());
         }
     }//GEN-LAST:event_jbBuscarPorNombreActionPerformed
 
+    private void jtEntrenadorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEntrenadorMouseReleased
+
+        if (jtEntrenador.getSelectedRowCount() > 1) {
+            jtEntrenador.clearSelection();
+        }
+        
+        if(jtEntrenador.getSelectedRow() != -1) {
+            reestablecerControles();
+            int fila = jtEntrenador.getSelectedRow();
+            jtfDNI.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 1)));
+            jtfNombre.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 2)));
+            jtfApellido.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 3)));
+            jtfEspecialidad.setText(String.valueOf(modeloEntrenador.getValueAt(fila, 4)));
+      
+            if (String.valueOf(modeloEntrenador.getValueAt(fila, 5)).equals("true")) {
+                jtfEstado.setText("Activo");
+                jbDeshabilitar.setText("DESHABILITAR");
+            }
+            else {
+                jtfEstado.setText("Inactivo");
+                jbDeshabilitar.setText("HABILITAR");
+            }
+           
+            setearEntrenadorConDatosDelFormulario();
+        }
+    }//GEN-LAST:event_jtEntrenadorMouseReleased
+
+    private void setearEntrenadorConDatosDelFormulario() {
+        int dni = Integer.parseInt(jtfDNI.getText());
+        String nombre = jtfNombre.getText();
+        String apellido = jtfApellido.getText();
+        String especialidad = jtfEspecialidad.getText();
+        boolean estado = jtfEstado.getText().equals("Activo");
+        
+        entrenadorActual = new Entrenador(dni, nombre, apellido, especialidad, estado);
+    }
+    
+    private void limpiarCampos() {
+        jtfDNI.setText("");
+        jtfNombre.setText("");
+        jtfApellido.setText("");
+        jtfEspecialidad.setText("");
+        jtfEstado.setText("");
+    }
+    
     private void llenarCampos() {
         jtfDNI.setText(String.valueOf(entrenadorActual.getDni()));
         jtfNombre.setText(entrenadorActual.getNombre());
@@ -462,102 +497,47 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         }
     }
     
-    private void limpiarCampos() {
-        jtfDNI.setText("");
-        jtfNombre.setText("");
-        jtfApellido.setText("");
-        jtfEspecialidad.setText("");
-        jtfEstado.setText("");
+    private void camposEditables() {
+        jtfDNI.setEditable(true);
+        jtfNombre.setEditable(true);
+        jtfApellido.setEditable(true);
+        jtfEspecialidad.setEditable(true);
+    }
+    
+    private void camposNoEditables() {
+        jtfDNI.setEditable(false);
+        jtfNombre.setEditable(false);
+        jtfApellido.setEditable(false);
+        jtfEspecialidad.setEditable(false);
+    }
+    
+    private void camposHabilitados() {
+        jtfDNI.setEnabled(true);
+        jtfNombre.setEnabled(true);
+        jtfApellido.setEnabled(true);
+        jtfEspecialidad.setEnabled(true);
+        jtfEstado.setEnabled(true);
+    }
+    
+    private void camposDeshabilitados() {
+       jtfDNI.setEnabled(false);
+        jtfNombre.setEnabled(false);
+        jtfApellido.setEnabled(false);
+        jtfEspecialidad.setEnabled(false);
+        jtfEstado.setEnabled(false); 
     }
     
     private void reestablecerControles() {
-        jlEntrenador.setText("Entrenador:");
+        jlEntrenador.setText("ENTRENADOR:");
         jlEntrenador.setForeground(Color.BLACK);
         jbAgregar.setText("AGREGAR");
         jbModificar.setText("MODIFICAR");
         jbBuscar.setText("BUSCAR");
-        jtfNombre.setEnabled(true);
-        jtfApellido.setEnabled(true);
-        jtfEspecialidad.setEnabled(true);
         jrbEstado.setSelected(false);
         jrbEstado.setVisible(false);
-        setCambiosHabilitados(false);
         limpiarCampos();
-    }
-    
-    private void setearEntrenadorConDatosDelFormulario() {
-        int dni = Integer.parseInt(jtfDNI.getText());
-        String nombre = jtfNombre.getText();
-        String apellido = jtfApellido.getText();
-        String especialidad = jtfEspecialidad.getText();
-        boolean estado = jtfEstado.getText().equals("Activo");
-        
-        entrenadorActual = new Entrenador(dni, nombre, apellido, especialidad, estado);
-    }
-    
-    private boolean validacionFormulario() {
-        if (!validacionDNI()) {
-            return false;
-        }
-        if (!validacionNombre()) {
-            return false;
-        }
-        if (!validacionApellido()) {
-            return false;
-        }
-        if (!validacionEspecialidad()) {
-            return false;
-        }
-        return true;
-    }
-    
-    private boolean validacionDNI() {
-        if (jtfDNI.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Campo DNI vacío.");
-            jtfDNI.requestFocusInWindow();
-            return false;
-        }
-        
-        try{        
-            Integer.parseInt(jtfDNI.getText());
-        }catch(Exception nfe){
-            JOptionPane.showMessageDialog(this, "El DNI debe ser un nro.");
-            return false;
-        }
-        
-        if (Integer.parseInt(jtfDNI.getText()) < 0) {
-            JOptionPane.showMessageDialog(this, "El DNI debe ser un nro positivo.");
-            return false;
-        }
-        
-        return true;
-    }
-    
-    private boolean validacionApellido(){
-        if (jtfApellido.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Campo Apellido vacío.");
-            jtfApellido.requestFocusInWindow();
-            return false;
-        }
-        return true;
-    }
-    
-    private boolean validacionNombre(){
-        if (jtfNombre.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Campo Nombre vacío.");
-            jtfNombre.requestFocusInWindow();
-            return false;
-        }
-        return true;
-    }
-    
-    private boolean validacionEspecialidad() {
-        if (jtfEspecialidad.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Campo Especialidad vacío.");
-            jtfEspecialidad.requestFocusInWindow();
-            return false;
-        }
-        return true;
+        camposNoEditables();
+        camposHabilitados();
     }
     
     private void limpiarTabla(){
@@ -602,7 +582,7 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
     private void llenarTablaInactivos() {
         limpiarTabla();
         List<Entrenador> entrenadores;
-        entrenadores = entrenadorData.listarEntrenadoresNoActivos();
+        entrenadores = entrenadorData.listarEntrenadoresInactivos();
         
         for (Entrenador e : entrenadores) {
             modeloEntrenador.addRow(new Object[]{
@@ -616,7 +596,7 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
         }
     }
     
-    private void llenarTablasPorNombre(List<Entrenador> listaEntrenadores) {
+    private void llenarTablaPorNombre(List<Entrenador> listaEntrenadores) {
         limpiarTabla();
         String tx = jtfCaracteres.getText().toLowerCase();
         listaEntrenadores.removeIf(entrenador -> !entrenador.getNombre().toLowerCase().startsWith(tx));
@@ -631,6 +611,73 @@ public class GestionEntrenadores extends javax.swing.JInternalFrame {
                 e.isEstado()
             });
         }
+    }
+    
+    private boolean validacionFormulario() {
+        if (!validacionDNI()) {
+            return false;
+        }
+        if (!validacionNombre()) {
+            return false;
+        }
+        if (!validacionApellido()) {
+            return false;
+        }
+        if (!validacionEspecialidad()) {
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validacionDNI() {
+        if (jtfDNI.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo DNI vacío.");
+            jtfDNI.requestFocusInWindow();
+            return false;
+        }
+        
+        try{        
+            Integer.parseInt(jtfDNI.getText());
+        }catch(Exception nfe){
+            JOptionPane.showMessageDialog(this, "El DNI debe ser un nro.");
+            jtfDNI.requestFocusInWindow();
+            return false;
+        }
+        
+        if (Integer.parseInt(jtfDNI.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "El DNI debe ser un nro positivo.");
+            jtfDNI.requestFocusInWindow();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private boolean validacionApellido(){
+        if (jtfApellido.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo Apellido vacío.");
+            jtfApellido.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validacionNombre(){
+        if (jtfNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo Nombre vacío.");
+            jtfNombre.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validacionEspecialidad() {
+        if (jtfEspecialidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campo Especialidad vacío.");
+            jtfEspecialidad.requestFocusInWindow();
+            return false;
+        }
+        return true;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

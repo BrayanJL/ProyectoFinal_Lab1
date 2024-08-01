@@ -79,10 +79,11 @@ public class PruebasEntrenadorClase {
         
         ClaseData cd = new ClaseData();
         
-        LocalTime hora1 = LocalTime.parse("08:30:00");
+        LocalTime hora1 = LocalTime.parse("08:30");
         LocalTime hora2 = LocalTime.parse("18:30:00");
         LocalTime hora3 = LocalTime.parse("17:00:00");
         LocalTime hora4 = LocalTime.parse("10:00:00");
+        LocalTime hora5 = LocalTime.parse("09:00:00");
         
         Clase clase0 = new Clase(ent,hora2,"Pilates",20,true);
         Clase clase1 = new Clase(ent2, hora1, "Yoga", 30, true);
@@ -90,6 +91,7 @@ public class PruebasEntrenadorClase {
         Clase clase3 = new Clase(ent2,hora1,"Yoda",25,false);
         Clase clase4 = new Clase(ent2, hora4, "Yoga", 20, true);
         Clase clase5 = new Clase(ent3, hora2, "Calistenia", 20, true);
+        Clase clase7 = new Clase(ent2, hora5, "Calistenia", 20, true);
         
         System.out.println("");
         System.out.println("///////////////////// Guardar Clase:");
@@ -101,6 +103,7 @@ public class PruebasEntrenadorClase {
         cd.guardarClase(clase3);
         cd.guardarClase(clase4);
         cd.guardarClase(clase5);
+        cd.guardarClase(clase7);
         
         for (Clase cl : cd.listarClases()) {
             System.out.println(cl.toString());
@@ -125,7 +128,7 @@ public class PruebasEntrenadorClase {
         System.out.println("///////////////////// Eliminar Clase:");
         System.out.println("");
         
-        cd.eliminarClase(clase2.getIdClase());
+        cd.deshabilitarClase(clase2.getIdClase());
         
         for (Clase cl : cd.listarClases()) {
             System.out.println(cl.toString());
@@ -135,7 +138,7 @@ public class PruebasEntrenadorClase {
         System.out.println("///////////////////// Listar clases válidas:");
         System.out.println("");
         
-        for (Clase cl : cd.listarClasesValidas()) {
+        for (Clase cl : cd.listarClasesActivas()) {
             System.out.println(cl.toString());
         }
         
@@ -154,7 +157,7 @@ public class PruebasEntrenadorClase {
         ed.deshabilitarEntrenador(ent2.getDni());
         ent2 = ed.buscarEntrenador(ent2.getIdEntrenador());
         
-        for (Clase cl : cd.listarClasesValidas()) {
+        for (Clase cl : cd.listarClasesActivas()) {
             System.out.println(cl.toString());
         }
         

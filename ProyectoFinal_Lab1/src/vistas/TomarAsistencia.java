@@ -309,24 +309,22 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jlIdSocioText)
-                                .addGap(51, 51, 51)
-                                .addComponent(jlIdSocio))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jlSocio)
+                                .addGap(25, 25, 25))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlNombreSocioText)
                                     .addComponent(jlPasesSocioText)
-                                    .addComponent(jlDniSocioText))
+                                    .addComponent(jlDniSocioText)
+                                    .addComponent(jlIdSocioText))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlIdSocio)
                                     .addComponent(jlDniSocio)
                                     .addComponent(jlNombreSocio)
-                                    .addComponent(jlPasesSocio)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jlSocio)
-                                .addGap(25, 25, 25)))
+                                    .addComponent(jlPasesSocio))))
                         .addGap(0, 270, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -429,7 +427,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         limpiarTablaClase();
         List<Clase> clases;
-        clases = claseData.listarClasesValidas();
+        clases = claseData.listarClasesActivas();
         for (Clase c: clases){
             modeloClase.addRow(new Object[]{
                     c.getIdClase(),

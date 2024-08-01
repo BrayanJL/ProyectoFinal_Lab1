@@ -164,6 +164,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfNombre">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlDNI">
           <Properties>
@@ -171,6 +174,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfDNI">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlApellido">
           <Properties>
@@ -178,6 +184,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfApellido">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlEspecialidad">
           <Properties>
@@ -185,6 +194,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfEspecialidad">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlEstado">
           <Properties>
@@ -193,7 +205,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jtfEstado">
           <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbEstado">
@@ -305,7 +317,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtEntrenadorMouseClicked"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtEntrenadorMouseReleased"/>
               </Events>
             </Component>
           </SubComponents>
