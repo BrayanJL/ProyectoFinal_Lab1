@@ -112,6 +112,14 @@ public class ClaseData {
         return clases;
     }
     
+    public List<Clase> listarClasesValidas() {
+        List<Clase> clases = listarClases();
+        clases.removeIf(clase -> clase.isEstado() == false);
+        clases.removeIf(clase -> clase.getEntrenador().isEstado() == false);
+        
+        return clases;
+    }
+    
     public List<Clase> listarClasesInactivas() {
         List<Clase> clases = listarClases();
         clases.removeIf(clase -> clase.isEstado() == true);
