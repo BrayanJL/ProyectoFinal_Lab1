@@ -28,6 +28,8 @@ public class AsistenciaData {
         int idSocio = asistencia.getSocio().getIdSocio();
         Membresia membresia = membresiaData.recibirUltimaMembresia(idSocio);
         
+        
+        
         boolean ok1 = asistencia.getClase().isEstado();
         boolean ok2 = asistencia.getClase().getEntrenador().isEstado();
         boolean ok3 = asistencia.getSocio().isActivo();
@@ -36,9 +38,9 @@ public class AsistenciaData {
         
         if (!ok1 || !ok2 || !ok3 || !ok4){
             if(!ok1) {
-                JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase con un entrenador inactivo");
-            }else if(!ok2) {
                 JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase inactiva");
+            }else if(!ok2) {
+                JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase con un entrenador inactivo");
             }else if (!ok3){
                 JOptionPane.showMessageDialog(null, "Un socio inactivo no puede asistir a una clase");
             }else if (!ok4){
@@ -66,8 +68,7 @@ public class AsistenciaData {
                     
                     //Reducimos en 1 la cantidad de pases
                     membresia.setCantidadPases(membresia.getCantidadPases()-1);
-                    //TODO: MODIFICAR MEMBRESIA
-                    membresiaData.guardarMembresia(membresia);
+                    membresiaData.modificarCantidadPases(membresia);
                     
                     JOptionPane.showMessageDialog(null, "Se agrego la asistencia exitosamente");
                 }

@@ -38,10 +38,10 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
     public TomarAsistencia() {
         initComponents();
         modeloClase = (DefaultTableModel)jtClases.getModel();
-        jbListarClasesActionPerformed(null);
+        jbListarClasesActivasActionPerformed(null);
         
         modeloSocio = (DefaultTableModel)jtSocios.getModel();
-        jbListarSociosActionPerformed(null);
+        jbListarSociosActivosActionPerformed(null);
     }
 
     /**
@@ -53,87 +53,52 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jbListarClases = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jpContenido = new javax.swing.JPanel();
+        jpClases = new javax.swing.JPanel();
+        jbListarClasesActivas = new javax.swing.JButton();
+        jbListarCClasesInactivas = new javax.swing.JButton();
+        jbListarClasesValidas = new javax.swing.JButton();
+        jbListarAsistenciaAClase = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtClases = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        jlSocio = new javax.swing.JLabel();
-        jlIdSocioText = new javax.swing.JLabel();
-        jlDniSocioText = new javax.swing.JLabel();
-        jlNombreSocioText = new javax.swing.JLabel();
-        jlNombreSocio = new javax.swing.JLabel();
-        jlDniSocio = new javax.swing.JLabel();
-        jlIdSocio = new javax.swing.JLabel();
-        jlPasesSocioText = new javax.swing.JLabel();
-        jlPasesSocio = new javax.swing.JLabel();
-        jbListarSocios = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jpSocios = new javax.swing.JPanel();
+        jbListarSociosActivos = new javax.swing.JButton();
+        jbListarSociosInactivos = new javax.swing.JButton();
+        jbListarAsistenciaDeSocio = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtSocios = new javax.swing.JTable();
         jbAgregarAsistencia = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        setResizable(true);
+        setMinimumSize(new java.awt.Dimension(1063, 538));
 
-        jLabel5.setText("Capacidad:");
+        jpClases.setMinimumSize(new java.awt.Dimension(498, 384));
 
-        jLabel6.setText("jLabel6");
-
-        jLabel7.setText("jLabel7");
-
-        jLabel8.setText("jLabel8");
-
-        jLabel9.setText("jLabel9");
-
-        jLabel10.setText("Profesor:");
-
-        jLabel11.setText("jLabel11");
-
-        jLabel1.setText("Clase");
-
-        jLabel2.setText("ID:");
-
-        jLabel3.setText("Nombre:");
-
-        jLabel4.setText("Horario:");
-
-        jbListarClases.setText("Listar Clases");
-        jbListarClases.addActionListener(new java.awt.event.ActionListener() {
+        jbListarClasesActivas.setText("Listar Clases Activas");
+        jbListarClasesActivas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbListarClasesActionPerformed(evt);
+                jbListarClasesActivasActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Ver asistencias a clase");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbListarCClasesInactivas.setText("Listar Clases Inactivas");
+        jbListarCClasesInactivas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbListarCClasesInactivasActionPerformed(evt);
+            }
+        });
+
+        jbListarClasesValidas.setText("Listar Clases Validas");
+        jbListarClasesValidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbListarClasesValidasActionPerformed(evt);
+            }
+        });
+
+        jbListarAsistenciaAClase.setText("Ver asistencias a clase");
+        jbListarAsistenciaAClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbListarAsistenciaAClaseActionPerformed(evt);
             }
         });
 
@@ -160,125 +125,77 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtClases.setColumnSelectionAllowed(true);
+        jtClases.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtClases.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jtClases);
-        jtClases.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jtClases.getColumnModel().getColumnCount() > 0) {
-            jtClases.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jtClases.getColumnModel().getColumn(0).setPreferredWidth(25);
             jtClases.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jbListarClases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel10))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel11)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel3)))
-                        .addGap(0, 269, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+        javax.swing.GroupLayout jpClasesLayout = new javax.swing.GroupLayout(jpClases);
+        jpClases.setLayout(jpClasesLayout);
+        jpClasesLayout.setHorizontalGroup(
+            jpClasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpClasesLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jpClasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpClasesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbListarClasesActivas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbListarCClasesInactivas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbListarClasesValidas)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpClasesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbListarAsistenciaAClase)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jpClasesLayout.setVerticalGroup(
+            jpClasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpClasesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jpClasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbListarCClasesInactivas)
+                    .addComponent(jbListarClasesActivas)
+                    .addComponent(jbListarClasesValidas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbListarClases)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(jbListarAsistenciaAClase)
                 .addContainerGap())
         );
 
-        jlSocio.setText("Socio");
+        jpSocios.setMinimumSize(new java.awt.Dimension(498, 384));
 
-        jlIdSocioText.setText("ID:");
-
-        jlDniSocioText.setText("Dni:");
-
-        jlNombreSocioText.setText("Nombre:");
-
-        jlNombreSocio.setText("jLabel5");
-
-        jlDniSocio.setText("jLabel6");
-
-        jlIdSocio.setText("jLabel7");
-
-        jlPasesSocioText.setText("Pases:");
-
-        jlPasesSocio.setText("jLabel6");
-
-        jbListarSocios.setText("Listar Socios");
-        jbListarSocios.addActionListener(new java.awt.event.ActionListener() {
+        jbListarSociosActivos.setText("Listar Socios Activos");
+        jbListarSociosActivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbListarSociosActionPerformed(evt);
+                jbListarSociosActivosActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Ver asistencia de socio");
+        jbListarSociosInactivos.setText("Listar Socios Inactivos");
+
+        jbListarAsistenciaDeSocio.setText("Ver asistencia de socio");
 
         jtSocios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Dni", "Nombre", "Pases", "Habilitado"
+                "Id", "Dni", "Nombre", "Pases", "Fecha", "Habilitado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -289,73 +206,43 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtSocios.setColumnSelectionAllowed(true);
+        jtSocios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtSocios.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(jtSocios);
-        jtSocios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jtSocios.getColumnModel().getColumnCount() > 0) {
-            jtSocios.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jtSocios.getColumnModel().getColumn(4).setPreferredWidth(50);
+            jtSocios.getColumnModel().getColumn(0).setPreferredWidth(25);
+            jtSocios.getColumnModel().getColumn(5).setPreferredWidth(50);
         }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jbListarSocios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jlSocio)
-                                .addGap(25, 25, 25))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlNombreSocioText)
-                                    .addComponent(jlPasesSocioText)
-                                    .addComponent(jlDniSocioText)
-                                    .addComponent(jlIdSocioText))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlIdSocio)
-                                    .addComponent(jlDniSocio)
-                                    .addComponent(jlNombreSocio)
-                                    .addComponent(jlPasesSocio))))
-                        .addGap(0, 270, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout jpSociosLayout = new javax.swing.GroupLayout(jpSocios);
+        jpSocios.setLayout(jpSociosLayout);
+        jpSociosLayout.setHorizontalGroup(
+            jpSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpSociosLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jbListarSociosActivos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbListarSociosInactivos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSociosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbListarAsistenciaDeSocio)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSociosLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpSociosLayout.setVerticalGroup(
+            jpSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpSociosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlSocio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlIdSocioText)
-                    .addComponent(jlIdSocio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlDniSocioText)
-                    .addComponent(jlDniSocio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlNombreSocioText)
-                    .addComponent(jlNombreSocio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlPasesSocioText)
-                    .addComponent(jlPasesSocio))
-                .addGap(28, 28, 28)
-                .addComponent(jbListarSocios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addGroup(jpSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbListarSociosActivos)
+                    .addComponent(jbListarSociosInactivos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbListarAsistenciaDeSocio)
                 .addContainerGap())
         );
 
@@ -366,31 +253,30 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpContenidoLayout = new javax.swing.GroupLayout(jpContenido);
+        jpContenido.setLayout(jpContenidoLayout);
+        jpContenidoLayout.setHorizontalGroup(
+            jpContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpContenidoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jpClases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jpSocios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpContenidoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbAgregarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpContenidoLayout.setVerticalGroup(
+            jpContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpContenidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jbAgregarAsistencia)
-                .addContainerGap())
+                .addGroup(jpContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpClases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpSocios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbAgregarAsistencia))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -399,15 +285,13 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jpContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jpContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -423,7 +307,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
             modeloSocio.removeRow(0);
     }
     
-    private void jbListarClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarClasesActionPerformed
+    private void jbListarClasesActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarClasesActivasActionPerformed
         // TODO add your handling code here:
         limpiarTablaClase();
         List<Clase> clases;
@@ -439,13 +323,13 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                     c.isEstado()
                 });
         }
-    }//GEN-LAST:event_jbListarClasesActionPerformed
+    }//GEN-LAST:event_jbListarClasesActivasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jbListarAsistenciaAClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarAsistenciaAClaseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jbListarAsistenciaAClaseActionPerformed
 
-    private void jbListarSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarSociosActionPerformed
+    private void jbListarSociosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarSociosActivosActionPerformed
         // TODO add your handling code here:
         limpiarTablaSocio();
         List<Socio> socios;
@@ -456,10 +340,11 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
                     s.getDni(),
                     s.getNombre()+' '+s.getApellido(),
                     membresiaData.contarPases(s.getIdSocio()),
+                    ' ',
                     s.isActivo()
                 });
         }
-    }//GEN-LAST:event_jbListarSociosActionPerformed
+    }//GEN-LAST:event_jbListarSociosActivosActionPerformed
 
     private void jbAgregarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarAsistenciaActionPerformed
         // TODO add your handling code here:
@@ -468,8 +353,8 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         
         if (filaClase != -1 && filaSocio != -1){
 
-            int idSocio = (int)jtSocios.getValueAt(filaClase, 0);            
-            int idClase = (int)jtClases.getValueAt(filaSocio, 0);
+            int idSocio = (int)jtSocios.getValueAt(filaSocio, 0);            
+            int idClase = (int)jtClases.getValueAt(filaClase, 0);
             
             Socio socio = socioData.buscarSocioPorID(idSocio);
             Clase clase = claseData.buscarClase(idClase);
@@ -481,40 +366,29 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbAgregarAsistenciaActionPerformed
 
+    private void jbListarClasesValidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarClasesValidasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbListarClasesValidasActionPerformed
+
+    private void jbListarCClasesInactivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarCClasesInactivasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbListarCClasesInactivasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbAgregarAsistencia;
-    private javax.swing.JButton jbListarClases;
-    private javax.swing.JButton jbListarSocios;
-    private javax.swing.JLabel jlDniSocio;
-    private javax.swing.JLabel jlDniSocioText;
-    private javax.swing.JLabel jlIdSocio;
-    private javax.swing.JLabel jlIdSocioText;
-    private javax.swing.JLabel jlNombreSocio;
-    private javax.swing.JLabel jlNombreSocioText;
-    private javax.swing.JLabel jlPasesSocio;
-    private javax.swing.JLabel jlPasesSocioText;
-    private javax.swing.JLabel jlSocio;
+    private javax.swing.JButton jbListarAsistenciaAClase;
+    private javax.swing.JButton jbListarAsistenciaDeSocio;
+    private javax.swing.JButton jbListarCClasesInactivas;
+    private javax.swing.JButton jbListarClasesActivas;
+    private javax.swing.JButton jbListarClasesValidas;
+    private javax.swing.JButton jbListarSociosActivos;
+    private javax.swing.JButton jbListarSociosInactivos;
+    private javax.swing.JPanel jpClases;
+    private javax.swing.JPanel jpContenido;
+    private javax.swing.JPanel jpSocios;
     private javax.swing.JTable jtClases;
     private javax.swing.JTable jtSocios;
     // End of variables declaration//GEN-END:variables

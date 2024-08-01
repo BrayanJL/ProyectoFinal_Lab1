@@ -101,7 +101,7 @@ public class MembresiaData {
     }
     
     public void modificarCantidadPases(Membresia membresia) {
-        String sql = "UPDATE Membresia SET CantidadPases = ? WHERE ID_Nembresia = ?";
+        String sql = "UPDATE Membresía SET CantidadPases = ? WHERE ID_Membresía = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
