@@ -471,7 +471,7 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
             int idSocio = (int)jtSocios.getValueAt(filaClase, 0);            
             int idClase = (int)jtClases.getValueAt(filaSocio, 0);
             
-            Socio socio = socioData.buscarSocio(idSocio);
+            Socio socio = socioData.buscarSocioPorID(idSocio);
             Clase clase = claseData.buscarClase(idClase);
             LocalDate fecha = LocalDate.now();
             

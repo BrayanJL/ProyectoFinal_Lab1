@@ -97,7 +97,7 @@ public class AsistenciaData {
                 asistencia = new Asistencia();
                 asistencia.setIdAsistencia(rs.getInt("ID_Asistencia"));
                 asistencia.setClase(claseData.buscarClase(rs.getInt("ID_Clase")));
-                asistencia.setSocio(socioData.buscarSocio(rs.getInt("ID_Socio")));
+                asistencia.setSocio(socioData.buscarSocioPorID(rs.getInt("ID_Socio")));
                 asistencia.setFechaAsistencia(rs.getDate("Fecha_Asistencia").toLocalDate());
             }
             ps.close();
