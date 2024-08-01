@@ -134,7 +134,7 @@ public class EntrenadorData {
         return entrenadores;
     }
     
-    public List<Entrenador> listarEntrenadoresNoActivos() {
+    public List<Entrenador> listarEntrenadoresInactivos() {
         List<Entrenador> entrenadores = listarEntrenadores();
         entrenadores.removeIf(entrenador -> entrenador.isEstado());
         
@@ -143,7 +143,7 @@ public class EntrenadorData {
     
     public void modificarEntrenador(Entrenador entrenador) {
         
-        if (dniRepetido( entrenador) == false) {
+        if (dniRepetido(entrenador)) {
             return;
         }
         
@@ -173,28 +173,6 @@ public class EntrenadorData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador " + e.getMessage());
         }
-    }
-    
-    private boolean dniRepetido(Entrenador entrenador) {
-        String sql = "SELECT * FROM entrenador WHERE ID_Entrenador != ? and DNI = ?";
-        PreparedStatement ps = null;
-        
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, entrenador.getIdEntrenador());
-            ps.setInt(2, entrenador.getDni());
-            
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Ya existe un entrenador con este DNI");
-                return false;
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador "+e.getMessage());
-        }
-        return true;
     }
     
     public void deshabilitarEntrenador(int dni) {
@@ -229,5 +207,28 @@ public class EntrenadorData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador " + e.getMessage());
         }
+    }
+    
+    private boolean dniRepetido(Entrenador entrenador) {
+        
+        String sql = "SELECT * FROM entrenador WHERE ID_Entrenador != ? and DNI = ?";
+        PreparedStatement ps = null;
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, entrenador.getIdEntrenador());
+            ps.setInt(2, entrenador.getDni());
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Ya existe un entrenador con este DNI");
+                return true;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Entrenador "+e.getMessage());
+        }
+        return false;
     }
 }
