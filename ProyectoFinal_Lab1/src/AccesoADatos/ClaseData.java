@@ -202,11 +202,7 @@ public class ClaseData {
         }
     }
     
-<<<<<<< Updated upstream
-    public void eliminarClase(int idClase) {
-=======
     public void deshabilitarClase(int idClase) {
->>>>>>> Stashed changes
         try {
             String sql = "UPDATE clase SET estado = 0 WHERE ID_Clase = ? ";
             PreparedStatement ps = con.prepareStatement(sql);
