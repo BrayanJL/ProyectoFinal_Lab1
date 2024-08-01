@@ -100,6 +100,24 @@ public class MembresiaData {
         }
     }
     
+    public void modificarCantidadPases(Membresia membresia) {
+        String sql = "UPDATE Membresia SET CantidadPases = ? WHERE ID_Nembresia = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, membresia.getCantidadPases());
+            ps.setInt(2, membresia.getIdMembresia());
+            
+            int exito = ps.executeUpdate();
+            
+            if(exito == 1) {
+                JOptionPane.showMessageDialog(null, "Se modifico la membresía exitosamente");
+            } else JOptionPane.showMessageDialog(null, "No existe esa membresia");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Membresia " + e.getMessage());
+        }
+    }
+    
     public void eliminarMembresia(int idMembresia) {
         String sql = "UPDATE Membresía SET estado = 0 WHERE ID_Membresía = ?";
         
