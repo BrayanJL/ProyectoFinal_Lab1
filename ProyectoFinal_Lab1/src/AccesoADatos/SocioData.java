@@ -40,7 +40,7 @@ public class SocioData {
         }
     }
     
-    public Socio buscarSocio (int id) {
+    public Socio buscarSocioPorID (int id) {
         Socio socio = null;
         String sql = "SELECT * FROM socio WHERE ID_Socio = ?";
         PreparedStatement ps = null;
@@ -60,7 +60,7 @@ public class SocioData {
                 socio.setCorreo(rs.getString("Correo"));
                 socio.setTelefono(rs.getString("Teléfono"));
                 socio.setEstado(rs.getBoolean("estado"));
-            } else JOptionPane.showMessageDialog(null, "No existe socio con la ID que solicito");
+            } else 
             ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Socio "+e.getMessage());
@@ -89,7 +89,7 @@ public class SocioData {
                 socio.setCorreo(rs.getString("Correo"));
                 socio.setTelefono(rs.getString("Teléfono"));
                 socio.setEstado(rs.getBoolean("estado"));
-            } else JOptionPane.showMessageDialog(null, "No existe socio con el DNI que solicito");
+            } else 
             ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Socio "+e.getMessage());
@@ -127,6 +127,13 @@ public class SocioData {
     public List<Socio> listarSociosActivos() {
         List<Socio> socios = listarSocios();
         socios.removeIf(socio -> socio.isActivo() == false);
+        
+        return socios;
+    }
+    
+    public List<Socio> listarSociosNoActivos() {
+        List<Socio> socios = listarSocios();
+        socios.removeIf(socio -> socio.isActivo());
         
         return socios;
     }

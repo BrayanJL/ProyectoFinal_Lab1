@@ -66,7 +66,7 @@ public class MembresiaData {
             while(rs.next()) {
                 Membresia memb = new Membresia();
                 memb.setIdMembresia(rs.getInt("ID_Membresía"));
-                memb.setSocio(socData.buscarSocio(rs.getInt("ID_Socio")));
+                memb.setSocio(socData.buscarSocioPorID(rs.getInt("ID_Socio")));
                 memb.setCantidadPases(rs.getInt("CantidadPases"));
                 memb.setCosto(rs.getDouble("Costo"));
                 memb.setFechaInicio(rs.getDate("Fecha_Inicio").toLocalDate());
@@ -150,7 +150,7 @@ public class MembresiaData {
                 membresia.setEstado(rs.getBoolean("Estado"));
                 membresia.setFechaInicio(rs.getDate("Fecha_Inicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("Fecha_Fin").toLocalDate());
-                membresia.setSocio(socData.buscarSocio(idSocio));
+                membresia.setSocio(socData.buscarSocioPorID(idSocio));
             }
             ps.close();
             

@@ -26,10 +26,13 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmSocios = new javax.swing.JMenu();
+        jmiGestionSocios = new javax.swing.JMenuItem();
         jmMembresias = new javax.swing.JMenu();
+        jmiGestionMembresias = new javax.swing.JMenuItem();
         jmEntrenadores = new javax.swing.JMenu();
         jmiGestionEntrenadores = new javax.swing.JMenuItem();
         jmClases = new javax.swing.JMenu();
@@ -37,6 +40,8 @@ public class Menu extends javax.swing.JFrame {
         jmAsistencia = new javax.swing.JMenu();
         jmiTomarAsistencia = new javax.swing.JMenuItem();
         jmiAsistenciaPorSocio = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,9 +57,27 @@ public class Menu extends javax.swing.JFrame {
         );
 
         jmSocios.setText("Socios");
+
+        jmiGestionSocios.setText("Gestion Socios");
+        jmiGestionSocios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGestionSociosActionPerformed(evt);
+            }
+        });
+        jmSocios.add(jmiGestionSocios);
+
         jMenuBar1.add(jmSocios);
 
         jmMembresias.setText("Membresias");
+
+        jmiGestionMembresias.setText("Gestion Membresias");
+        jmiGestionMembresias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGestionMembresiasActionPerformed(evt);
+            }
+        });
+        jmMembresias.add(jmiGestionMembresias);
+
         jMenuBar1.add(jmMembresias);
 
         jmEntrenadores.setText("Entrenadores");
@@ -152,6 +175,26 @@ public class Menu extends javax.swing.JFrame {
         escritorio.moveToFront(gestionClases);
     }//GEN-LAST:event_jmiGestionClasesActionPerformed
 
+    private void jmiGestionSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGestionSociosActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionSocios gestionSocios = new GestionSocios();
+        gestionSocios.setVisible(true);
+        escritorio.add(gestionSocios);
+        escritorio.moveToFront(gestionSocios);
+    }//GEN-LAST:event_jmiGestionSociosActionPerformed
+
+    private void jmiGestionMembresiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGestionMembresiasActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionMembresia gestionMembresia = new GestionMembresia();
+        gestionMembresia.setVisible(true);
+        escritorio.add(gestionMembresia);
+        escritorio.moveToFront(gestionMembresia);
+    }//GEN-LAST:event_jmiGestionMembresiasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -190,6 +233,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jmAsistencia;
     private javax.swing.JMenu jmClases;
     private javax.swing.JMenu jmEntrenadores;
@@ -198,6 +242,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAsistenciaPorSocio;
     private javax.swing.JMenuItem jmiGestionClases;
     private javax.swing.JMenuItem jmiGestionEntrenadores;
+    private javax.swing.JMenuItem jmiGestionMembresias;
+    private javax.swing.JMenuItem jmiGestionSocios;
     private javax.swing.JMenuItem jmiTomarAsistencia;
     // End of variables declaration//GEN-END:variables
 }
