@@ -72,7 +72,7 @@
                       <Component id="jpClases" max="32767" attributes="0"/>
                       <Component id="jpSocios" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jbAgregarAsistencia" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -89,26 +89,20 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane2" pref="498" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jbListarClasesActivas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jbListarCClasesInactivas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jbListarClasesValidas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jbListarAsistenciaAClase" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="1" pref="506" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jbListarClasesValidas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jbListarClasesActivas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jbListarCClasesInactivas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jbVerAsistenciaAClase" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -122,9 +116,9 @@
                           <Component id="jbListarClasesValidas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="391" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="397" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbListarAsistenciaAClase" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbVerAsistenciaAClase" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -155,12 +149,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbListarClasesValidasActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jbListarAsistenciaAClase">
+            <Component class="javax.swing.JButton" name="jbVerAsistenciaAClase">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver asistencias a clase"/>
+                <Property name="text" type="java.lang.String" value="Ver aistentencia de clase"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbListarAsistenciaAClaseActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbVerAsistenciaAClaseActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -244,7 +238,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jbListarAsistenciaDeSocio" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbVerClasesAsistidas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -256,7 +250,7 @@
                               <Component id="jbListarSociosInactivos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane3" alignment="1" pref="501" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="1" pref="509" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -273,7 +267,7 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbListarAsistenciaDeSocio" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbVerClasesAsistidas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -292,13 +286,16 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Listar Socios Inactivos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbListarSociosInactivosActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jbListarAsistenciaDeSocio">
+            <Component class="javax.swing.JButton" name="jbVerClasesAsistidas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver asistencia de socio"/>
+                <Property name="text" type="java.lang.String" value="Ver clases asistidas"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbListarAsistenciaDeSocioActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbVerClasesAsistidasActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
