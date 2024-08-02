@@ -1,5 +1,8 @@
 package AccesoADatos;
 
+import AccesoADatos.ClaseData;
+import AccesoADatos.MembresiaData;
+import AccesoADatos.SocioData;
 import Entidades.Asistencia;
 import Entidades.Membresia;
 import java.sql.*;
@@ -108,27 +111,55 @@ public class AsistenciaData {
         
         return asistencia;
     }
-    /*
+    
     public List<Asistencia> listarAsistencia(){
         List<Asistencia> asistencias = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM asistencia";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Asistencia asistencia = new Asistencia();
+                asistencia.setIdAsistencia(rs.getInt("ID_Asistencia"));
+                asistencia.setSocio(socioData.buscarSocioPorID(rs.getInt("ID_Socio")));
+                asistencia.setClase(claseData.buscarClase(rs.getInt("ID_Clase")));
+                asistencia.setFechaAsistencia(LocalDate.MIN);
+                asistencia.setFechaAsistencia(rs.getDate("Fecha_Asistencia").toLocalDate());
+                asistencias.add(asistencia);
+            }
+            ps.close();
+                
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Clase "+e.getMessage());
+        }
+        
         return asistencias;
     }
     
-    public List<Asistencia> listarAsistenciaPorClase(){
-        List<Asistencia> asistencias = new ArrayList<>();
+    public List<Asistencia> listarAsistenciaPorClase(int idClase){
+        List<Asistencia> asistencias = listarAsistencia();
+        asistencias.removeIf(asistencia -> idClase != asistencia.getClase().getIdClase());
+        
         return asistencias;
     }
     
-    public List<Asistencia> listarAsistenciaPorSocio(){
-        List<Asistencia> asistencias = new ArrayList<>();
+    public List<Asistencia> listarAsistenciaPorSocio(int idSocio){
+        List<Asistencia> asistencias = listarAsistencia();
+        asistencias.removeIf(asistencia -> idSocio != asistencia.getSocio().getIdSocio());
+        
         return asistencias;
     }
     
-    public List<Asistencia> listarAsistenciaPorFecha(){
-        List<Asistencia> asistencias = new ArrayList<>();
+    public List<Asistencia> listarAsistenciaPorFechaYClase(LocalDate fecha, int idClase){
+        List<Asistencia> asistencias = listarAsistencia();
+        asistencias.removeIf(asistencia -> idClase  != asistencia.getClase().getIdClase()
+                                        || fecha    != asistencia.getFechaAsistencia());
+        
         return asistencias;
     }
-    */
+    
     public void modificarAsistencia(Asistencia asistencia){
         String sql = "UPDATE Asistencia SET ID_Socio = ?, ID_Clase = ?, Fecha_Asistencia = ?) "
             + "WHERE ID_Asistencia = ?";

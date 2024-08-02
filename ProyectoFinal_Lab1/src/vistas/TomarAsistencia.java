@@ -327,6 +327,23 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
 
     private void jbListarAsistenciaAClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarAsistenciaAClaseActionPerformed
         // TODO add your handling code here:
+        limpiarTablaSocio();
+
+        int filaClase = jtClases.getSelectedRow();
+        int idClase = (int)jtClases.getValueAt(filaClase, 0);
+        
+        List<Asistencia> asistencias = asistenciaData.listarAsistenciaPorClase(idClase);
+        
+        for (Asistencia a: asistencias){
+            modeloSocio.addRow(new Object[]{
+                    a.getSocio().getIdSocio(),
+                    a.getSocio().getDni(),
+                    a.getSocio().getNombre()+' '+a.getSocio().getApellido(),
+                    membresiaData.contarPases(a.getSocio().getIdSocio()),
+                    a.getFechaAsistencia(),
+                    a.getSocio().isActivo()
+                });
+        }
     }//GEN-LAST:event_jbListarAsistenciaAClaseActionPerformed
 
     private void jbListarSociosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarSociosActivosActionPerformed
