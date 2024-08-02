@@ -131,7 +131,7 @@ public class SocioData {
         return socios;
     }
     
-    public List<Socio> listarSociosNoActivos() {
+    public List<Socio> listarSociosInactivos() {
         List<Socio> socios = listarSocios();
         socios.removeIf(socio -> socio.isActivo());
         

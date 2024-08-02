@@ -45,19 +45,104 @@ public class MembresiaData {
             }
         } else {
             if(ok1 == false) {
-                JOptionPane.showMessageDialog(null, "No se puede inscribir un Socio no activo");
+//                JOptionPane.showMessageDialog(null, "No se puede inscribir un Socio no activo");
             } else {
-                JOptionPane.showMessageDialog(null, "No se puede inscribir una Membresia inactivo");
+//                JOptionPane.showMessageDialog(null, "No se puede inscribir una Membresia inactivo");
             }
             
         }
     }
     
-    public List<Membresia> obtenerMembresias() {
+    public Membresia buscarMembresia(int idMembresia){
+        Membresia membresia = null;
+        String sql = "SELECT * FROM Membresía WHERE ID_Membresía = ?";
+        PreparedStatement ps = null;
+        
+        try{
+            ps = con.prepareStatement (sql);
+            ps.setInt(1, idMembresia);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()){
+                membresia = new Membresia();
+                membresia.setIdMembresia(rs.getInt("ID_Membresía"));
+                membresia.setSocio(socData.buscarSocioPorID(rs.getInt("ID_Socio")));
+                membresia.setCantidadPases(rs.getInt("CantidadPases"));
+                membresia.setCosto(rs.getDouble("Costo"));
+                membresia.setFechaInicio(rs.getDate("Fecha_Inicio").toLocalDate());
+                membresia.setFechaFin(rs.getDate("Fecha_Fin").toLocalDate());
+                membresia.setEstado(rs.getBoolean("estado"));
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Membresia "+e.getMessage());
+        }
+        
+        return membresia;
+    }
+    
+    public List<Membresia> listarMembresias() {
         
         List<Membresia> membresias = new ArrayList<>();
         
         String sql = "SELECT * FROM Membresía";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Membresia memb = new Membresia();
+                memb.setIdMembresia(rs.getInt("ID_Membresía"));
+                memb.setSocio(socData.buscarSocioPorID(rs.getInt("ID_Socio")));
+                memb.setCantidadPases(rs.getInt("CantidadPases"));
+                memb.setCosto(rs.getDouble("Costo"));
+                memb.setFechaInicio(rs.getDate("Fecha_Inicio").toLocalDate());
+                memb.setFechaFin(rs.getDate("Fecha_Fin").toLocalDate());
+                memb.setEstado(rs.getBoolean("estado"));
+                membresias.add(memb);
+            }
+            
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Membresía " + e.getMessage());
+        }
+        return membresias;
+    }
+    
+    public List<Membresia> listarMembresiasActivas() {
+        
+        List<Membresia> membresias = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Membresía WHERE Estado = 1";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Membresia memb = new Membresia();
+                memb.setIdMembresia(rs.getInt("ID_Membresía"));
+                memb.setSocio(socData.buscarSocioPorID(rs.getInt("ID_Socio")));
+                memb.setCantidadPases(rs.getInt("CantidadPases"));
+                memb.setCosto(rs.getDouble("Costo"));
+                memb.setFechaInicio(rs.getDate("Fecha_Inicio").toLocalDate());
+                memb.setFechaFin(rs.getDate("Fecha_Fin").toLocalDate());
+                memb.setEstado(rs.getBoolean("estado"));
+                membresias.add(memb);
+            }
+            
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Membresía " + e.getMessage());
+        }
+        return membresias;
+    }
+    
+    public List<Membresia> listarMembresiasInactivas() {
+        
+        List<Membresia> membresias = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Membresía WHERE Estado = 0";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);

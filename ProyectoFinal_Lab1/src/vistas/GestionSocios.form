@@ -228,11 +228,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfDni">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfDniActionPerformed"/>
-          </Events>
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfNombre">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfEstado">
           <Properties>
@@ -240,10 +243,19 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfEdad">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfApellido">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfTelefono">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlApellido1">
           <Properties>
@@ -251,6 +263,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfEmail">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlNombre1">
           <Properties>
@@ -353,7 +368,7 @@
                     <Column editable="false" title="Edad" type="java.lang.Object"/>
                     <Column editable="false" title="Email" type="java.lang.Object"/>
                     <Column editable="false" title="Telefono" type="java.lang.Object"/>
-                    <Column editable="false" title="Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="Estado" type="java.lang.Boolean"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -405,7 +420,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtSociosMouseClicked"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtSociosMouseReleased"/>
               </Events>
             </Component>
           </SubComponents>

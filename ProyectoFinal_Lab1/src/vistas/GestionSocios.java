@@ -85,15 +85,21 @@ public class GestionSocios extends javax.swing.JInternalFrame {
 
         jlEstado.setText("Estado");
 
-        jtfDni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfDniActionPerformed(evt);
-            }
-        });
+        jtfDni.setEditable(false);
+
+        jtfNombre.setEditable(false);
 
         jtfEstado.setEnabled(false);
 
+        jtfEdad.setEditable(false);
+
+        jtfApellido.setEditable(false);
+
+        jtfTelefono.setEditable(false);
+
         jlApellido1.setText("Telefono");
+
+        jtfEmail.setEditable(false);
 
         jlNombre1.setText("Email");
 
@@ -236,17 +242,24 @@ public class GestionSocios extends javax.swing.JInternalFrame {
                 "ID", "DNI", "Nombre", "Apellido", "Edad", "Email", "Telefono", "Estado"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         jtSocios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtSociosMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jtSociosMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jtSocios);
@@ -325,6 +338,7 @@ public class GestionSocios extends javax.swing.JInternalFrame {
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         if (jbAgregar.getText().equals("AGREGAR")) {
             reestablecerControles();
+            camposEditables();
             jlSocio.setText("Llene los campos con los datos del socio a ingresar");
             jlSocio.setForeground(Color.BLUE);
             jtfDni.requestFocusInWindow();
@@ -344,38 +358,6 @@ public class GestionSocios extends javax.swing.JInternalFrame {
             }    
         }
     }//GEN-LAST:event_jbAgregarActionPerformed
-
-    private void jtfDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfDniActionPerformed
-
-    private void jtSociosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtSociosMouseClicked
-        // TODO add your handling code here:
-        if(jtSocios.getSelectedRow() != -1) {
-            reestablecerControles();
-            int fila = jtSocios.getSelectedRow();
-            jtfDni.setText(String.valueOf(modeloSocio.getValueAt(fila, 1)));
-            jtfNombre.setText(String.valueOf(modeloSocio.getValueAt(fila, 2)));
-            jtfApellido.setText(String.valueOf(modeloSocio.getValueAt(fila, 3)));
-            jtfEdad.setText(String.valueOf(modeloSocio.getValueAt(fila, 4)));
-            jtfEmail.setText(String.valueOf(modeloSocio.getValueAt(fila, 5)));
-            jtfTelefono.setText(String.valueOf(modeloSocio.getValueAt(fila, 6)));
-      
-            if (String.valueOf(modeloSocio.getValueAt(fila, 7)).equals("true")) {
-                jtfEstado.setText(String.valueOf("Activo"));
-                jbDeshabilitar.setText("DESHABILITAR");
-            }
-            else {
-                jtfEstado.setText(String.valueOf("Inactivo"));
-                jbDeshabilitar.setText("HABILITAR");
-            }
-           
-            setCambiosHabilitados(true);
-            setearSocioConDatosDeFormulario();
-        }
-        
-        
-    }//GEN-LAST:event_jtSociosMouseClicked
 
     private void jrbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbEstadoActionPerformed
         if (!jrbEstado.isSelected()) {
@@ -442,7 +424,8 @@ public class GestionSocios extends javax.swing.JInternalFrame {
         }
         
         if (jbModificar.getText().equals("MODIFICAR")) {
-            reestablecerControles();         
+            reestablecerControles();    
+            camposEditables();
             socioActual = sd.buscarSocioPorDNI(socioActual.getDni());
             String id = String.valueOf(socioActual.getIdSocio());
   
@@ -472,12 +455,11 @@ public class GestionSocios extends javax.swing.JInternalFrame {
             return;
             case 1: llenarTablaActivos();
             return;
-            case 2: llenarTablaNoActivos();
+            case 2: llenarTablaInactivos();
         }
     }//GEN-LAST:event_jcbSociosActionPerformed
 
     private void jbBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarNombreActionPerformed
-        List<Socio> socios;
         int eleccion = jcbSocios.getSelectedIndex();
         
         switch (eleccion) {
@@ -485,10 +467,35 @@ public class GestionSocios extends javax.swing.JInternalFrame {
             return;
             case 1: llenarTablasPorNombre(sd.listarSociosActivos());
             return;
-            case 2: llenarTablasPorNombre(sd.listarSociosNoActivos());
+            case 2: llenarTablasPorNombre(sd.listarSociosInactivos());
             return;
         }
     }//GEN-LAST:event_jbBuscarNombreActionPerformed
+
+    private void jtSociosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtSociosMouseReleased
+        if(jtSocios.getSelectedRow() != -1) {
+            reestablecerControles();
+            int fila = jtSocios.getSelectedRow();
+            jtfDni.setText(String.valueOf(modeloSocio.getValueAt(fila, 1)));
+            jtfNombre.setText(String.valueOf(modeloSocio.getValueAt(fila, 2)));
+            jtfApellido.setText(String.valueOf(modeloSocio.getValueAt(fila, 3)));
+            jtfEdad.setText(String.valueOf(modeloSocio.getValueAt(fila, 4)));
+            jtfEmail.setText(String.valueOf(modeloSocio.getValueAt(fila, 5)));
+            jtfTelefono.setText(String.valueOf(modeloSocio.getValueAt(fila, 6)));
+      
+            if (String.valueOf(modeloSocio.getValueAt(fila, 7)).equals("true")) {
+                jtfEstado.setText(String.valueOf("Activo"));
+                jbDeshabilitar.setText("DESHABILITAR");
+            }
+            else {
+                jtfEstado.setText(String.valueOf("Inactivo"));
+                jbDeshabilitar.setText("HABILITAR");
+            }
+           
+            setCambiosHabilitados(true);
+            setearSocioConDatosDeFormulario();
+        }
+    }//GEN-LAST:event_jtSociosMouseReleased
 
     private void setearSocioConDatosDeFormulario() {
         int dni = Integer.parseInt(jtfDni.getText());
@@ -517,6 +524,7 @@ public class GestionSocios extends javax.swing.JInternalFrame {
         jrbEstado.setVisible(false);
         setCambiosHabilitados(false);
         limpiarCampos();
+        camposNoEditables();
     }
     
     private void llenarCampos() {
@@ -590,10 +598,10 @@ public class GestionSocios extends javax.swing.JInternalFrame {
         }
     }
     
-    private void llenarTablaNoActivos() {
+    private void llenarTablaInactivos() {
         limpiarTabla();
         List<Socio> socios;
-        socios = sd.listarSociosNoActivos();
+        socios = sd.listarSociosInactivos();
         
         for (Socio s : socios) {
             modeloSocio.addRow(new Object[]{
@@ -756,6 +764,24 @@ public class GestionSocios extends javax.swing.JInternalFrame {
         }
         
         return true;
+    }
+    
+    private void camposEditables() {
+        jtfDni.setEditable(true);
+        jtfEdad.setEditable(true);
+        jtfNombre.setEditable(true);
+        jtfApellido.setEditable(true);
+        jtfEmail.setEditable(true);
+        jtfTelefono.setEditable(true);
+    }
+    
+    private void camposNoEditables() {
+        jtfDni.setEditable(false);
+        jtfEdad.setEditable(false);
+        jtfNombre.setEditable(false);
+        jtfApellido.setEditable(false);
+        jtfEmail.setEditable(false);
+        jtfTelefono.setEditable(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

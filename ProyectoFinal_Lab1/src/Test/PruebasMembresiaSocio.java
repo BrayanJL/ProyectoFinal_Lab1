@@ -104,7 +104,7 @@ public class PruebasMembresiaSocio {
         
         System.out.println("LISTAR MEMBRESIAS");
         
-        for (Membresia a :  md.obtenerMembresias()) {
+        for (Membresia a :  md.listarMembresias()) {
             System.out.println(a.toString());
         }
         
@@ -112,12 +112,12 @@ public class PruebasMembresiaSocio {
         
         md.modificarCosto(membresia1.getIdMembresia(), 2400);
         
-        for (Membresia a :  md.obtenerMembresias()) {
+        for (Membresia a :  md.listarMembresias()) {
             System.out.println(a.toString());
         }
        
         
-        for (Membresia a :  md.obtenerMembresias()) {
+        for (Membresia a :  md.listarMembresias()) {
             System.out.println(a.toString());
         }
         
@@ -125,7 +125,7 @@ public class PruebasMembresiaSocio {
         
         md.eliminarMembresia(membresia4.getIdMembresia());
         
-        for (Membresia a :  md.obtenerMembresias()) {
+        for (Membresia a :  md.listarMembresias()) {
             System.out.println(a.toString());
         }
         
@@ -133,7 +133,7 @@ public class PruebasMembresiaSocio {
         
         md.habilitarMembresia(membresia4.getIdMembresia());
         
-        for (Membresia a :  md.obtenerMembresias()) {
+        for (Membresia a :  md.listarMembresias()) {
             System.out.println(a.toString());
         }
         
