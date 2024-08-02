@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 12:24 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 02-08-2024 a las 05:20:29
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gimnasiopf`
+-- Base de datos: `gimnasiopf`
 --
 CREATE DATABASE IF NOT EXISTS `gimnasiopf` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `gimnasiopf`;
@@ -26,7 +26,7 @@ USE `gimnasiopf`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `asistencia`
+-- Estructura de tabla para la tabla `asistencia`
 --
 
 CREATE TABLE `asistencia` (
@@ -39,7 +39,7 @@ CREATE TABLE `asistencia` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `clase`
+-- Estructura de tabla para la tabla `clase`
 --
 
 CREATE TABLE `clase` (
@@ -51,10 +51,20 @@ CREATE TABLE `clase` (
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `clase`
+--
+
+INSERT INTO `clase` (`ID_Clase`, `ID_Entrenador`, `Horario`, `Nombre`, `Capacidad`, `estado`) VALUES
+(1, 1, '10:00:00', 'Karate', 30, 1),
+(2, 2, '19:00:00', 'Calistenia', 20, 1),
+(3, 3, '07:00:00', 'Taekwondo', 4, 1),
+(4, 2, '18:00:00', 'Calistenia', 20, 0);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `entrenador`
+-- Estructura de tabla para la tabla `entrenador`
 --
 
 CREATE TABLE `entrenador` (
@@ -66,10 +76,20 @@ CREATE TABLE `entrenador` (
   `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `entrenador`
+--
+
+INSERT INTO `entrenador` (`ID_Entrenador`, `DNI`, `Nombre`, `Apellido`, `Especialidad`, `estado`) VALUES
+(1, 41920110, 'Brayan', 'Lucero', 'Karate', 1),
+(2, 45802690, 'Ramiro', 'Romero', 'Calistenia', 1),
+(3, 38169587, 'Nicolas', 'Bustamante', 'Taekwondo', 1),
+(4, 33445566, 'Pablo', 'Poder', 'Powerlifting', 0);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `membresía`
+-- Estructura de tabla para la tabla `membresía`
 --
 
 CREATE TABLE `membresía` (
@@ -82,12 +102,25 @@ CREATE TABLE `membresía` (
   `CantidadPases` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `membresía`
+--
 
+INSERT INTO `membresía` (`ID_Membresía`, `ID_Socio`, `Fecha_Inicio`, `Fecha_Fin`, `estado`, `costo`, `CantidadPases`) VALUES
+(28, 62, '2024-08-01', '2024-09-01', 0, 10000, 0),
+(29, 63, '2024-08-01', '2024-09-01', 0, 15000, 12),
+(30, 64, '2024-08-01', '2024-09-01', 1, 25000, 20),
+(31, 62, '2024-09-01', '2024-11-01', 1, 15000, 12),
+(32, 63, '2024-06-01', '2024-07-01', 0, 10000, 8),
+(33, 63, '2024-05-01', '2024-06-01', 1, 10000, 8),
+(34, 64, '2024-10-01', '2024-11-01', 1, 10000, 0),
+(35, 63, '2023-08-01', '2023-09-01', 1, 10000, 0),
+(36, 64, '2022-08-01', '2022-09-01', 0, 10000, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `socio`
+-- Estructura de tabla para la tabla `socio`
 --
 
 CREATE TABLE `socio` (
@@ -101,13 +134,22 @@ CREATE TABLE `socio` (
   `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `socio`
+--
+
+INSERT INTO `socio` (`ID_Socio`, `DNI`, `Nombre`, `Apellido`, `Edad`, `Correo`, `Teléfono`, `estado`) VALUES
+(62, 12345678, 'Rodrigo', 'Rodriguez', 32, 'patito@gmail.com', '123456', 1),
+(63, 12345679, 'Ramiro', 'Ramires', 18, 'rama@gmail.com', '123457', 1),
+(64, 12345670, 'Gonzalo', 'González', 25, 'zalo@gmail.com', '123458', 1),
+(65, 12345671, 'Martin', 'Martinez', 20, 'martin@gmail.com', '123459', 0);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `asistencia`
+-- Indices de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
   ADD PRIMARY KEY (`ID_Asistencia`),
@@ -115,86 +157,86 @@ ALTER TABLE `asistencia`
   ADD KEY `id_clase_fk` (`ID_Clase`);
 
 --
--- Indexes for table `clase`
+-- Indices de la tabla `clase`
 --
 ALTER TABLE `clase`
   ADD PRIMARY KEY (`ID_Clase`),
   ADD KEY `entrenador_fk` (`ID_Entrenador`);
 
 --
--- Indexes for table `entrenador`
+-- Indices de la tabla `entrenador`
 --
 ALTER TABLE `entrenador`
   ADD PRIMARY KEY (`ID_Entrenador`),
   ADD UNIQUE KEY `dni_unico_entrenador` (`DNI`);
 
 --
--- Indexes for table `membresía`
+-- Indices de la tabla `membresía`
 --
 ALTER TABLE `membresía`
   ADD PRIMARY KEY (`ID_Membresía`),
   ADD KEY `socio_fk` (`ID_Socio`);
 
 --
--- Indexes for table `socio`
+-- Indices de la tabla `socio`
 --
 ALTER TABLE `socio`
   ADD PRIMARY KEY (`ID_Socio`),
   ADD UNIQUE KEY `dni_unico_socio` (`DNI`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `asistencia`
+-- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `ID_Asistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `clase`
+-- AUTO_INCREMENT de la tabla `clase`
 --
 ALTER TABLE `clase`
-  MODIFY `ID_Clase` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Clase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `entrenador`
+-- AUTO_INCREMENT de la tabla `entrenador`
 --
 ALTER TABLE `entrenador`
-  MODIFY `ID_Entrenador` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Entrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `membresía`
+-- AUTO_INCREMENT de la tabla `membresía`
 --
 ALTER TABLE `membresía`
-  MODIFY `ID_Membresía` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `ID_Membresía` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `socio`
+-- AUTO_INCREMENT de la tabla `socio`
 --
 ALTER TABLE `socio`
-  MODIFY `ID_Socio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `ID_Socio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `asistencia`
+-- Filtros para la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
   ADD CONSTRAINT `asistencia_fk_clase` FOREIGN KEY (`ID_Clase`) REFERENCES `clase` (`ID_Clase`),
   ADD CONSTRAINT `asistencia_fk_socio` FOREIGN KEY (`ID_Socio`) REFERENCES `socio` (`ID_Socio`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `clase`
+-- Filtros para la tabla `clase`
 --
 ALTER TABLE `clase`
   ADD CONSTRAINT `clase_fk_entrenador` FOREIGN KEY (`ID_Entrenador`) REFERENCES `entrenador` (`ID_Entrenador`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `membresía`
+-- Filtros para la tabla `membresía`
 --
 ALTER TABLE `membresía`
   ADD CONSTRAINT `membresía_fk_socio` FOREIGN KEY (`ID_Socio`) REFERENCES `socio` (`ID_Socio`) ON DELETE NO ACTION ON UPDATE NO ACTION;
