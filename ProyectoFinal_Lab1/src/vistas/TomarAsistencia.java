@@ -182,6 +182,11 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         jbListarSociosInactivos.setText("Listar Socios Inactivos");
 
         jbListarAsistenciaDeSocio.setText("Ver asistencia de socio");
+        jbListarAsistenciaDeSocio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbListarAsistenciaDeSocioActionPerformed(evt);
+            }
+        });
 
         jtSocios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -218,18 +223,19 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
         jpSocios.setLayout(jpSociosLayout);
         jpSociosLayout.setHorizontalGroup(
             jpSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpSociosLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jbListarSociosActivos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbListarSociosInactivos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSociosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbListarAsistenciaDeSocio)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSociosLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+            .addGroup(jpSociosLayout.createSequentialGroup()
+                .addGroup(jpSociosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpSociosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbListarSociosActivos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbListarSociosInactivos)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jpSociosLayout.setVerticalGroup(
@@ -259,14 +265,16 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
             jpContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpContenidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpClases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jpSocios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpContenidoLayout.createSequentialGroup()
+                        .addComponent(jpClases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jpSocios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpContenidoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbAgregarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpContenidoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbAgregarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpContenidoLayout.setVerticalGroup(
             jpContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,22 +335,23 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
 
     private void jbListarAsistenciaAClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarAsistenciaAClaseActionPerformed
         // TODO add your handling code here:
-        limpiarTablaSocio();
-
         int filaClase = jtClases.getSelectedRow();
-        int idClase = (int)jtClases.getValueAt(filaClase, 0);
         
-        List<Asistencia> asistencias = asistenciaData.listarAsistenciaPorClase(idClase);
-        
-        for (Asistencia a: asistencias){
-            modeloSocio.addRow(new Object[]{
-                    a.getSocio().getIdSocio(),
-                    a.getSocio().getDni(),
-                    a.getSocio().getNombre()+' '+a.getSocio().getApellido(),
-                    membresiaData.contarPases(a.getSocio().getIdSocio()),
-                    a.getFechaAsistencia(),
-                    a.getSocio().isActivo()
-                });
+        if (filaClase != -1){
+            limpiarTablaSocio();
+            int idClase = (int)jtClases.getValueAt(filaClase, 0);
+            List<Asistencia> asistencias = asistenciaData.listarAsistenciaPorClase(idClase);
+
+            for (Asistencia a: asistencias){
+                modeloSocio.addRow(new Object[]{
+                        a.getSocio().getIdSocio(),
+                        a.getSocio().getDni(),
+                        a.getSocio().getNombre()+' '+a.getSocio().getApellido(),
+                        membresiaData.contarPases(a.getSocio().getIdSocio()),
+                        a.getFechaAsistencia(),
+                        a.getSocio().isActivo()
+                    });
+            }
         }
     }//GEN-LAST:event_jbListarAsistenciaAClaseActionPerformed
 
@@ -390,6 +399,29 @@ public class TomarAsistencia extends javax.swing.JInternalFrame {
     private void jbListarCClasesInactivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarCClasesInactivasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbListarCClasesInactivasActionPerformed
+
+    private void jbListarAsistenciaDeSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarAsistenciaDeSocioActionPerformed
+        // TODO add your handling code here:
+        int filaSocio = jtSocios.getSelectedRow();
+        
+        if (filaSocio != -1){
+            limpiarTablaClase();
+            int idSocio = (int)jtSocios.getValueAt(filaSocio, 0);
+            List<Asistencia> asistencias = asistenciaData.listarAsistenciaPorSocio(idSocio);
+
+            for (Asistencia a: asistencias){
+                modeloClase.addRow(new Object[]{
+                        a.getClase().getIdClase(),
+                        a.getClase().getNombre(),
+                        a.getClase().getHorario(),
+                        a.getClase().getCapacidad(),
+                        a.getClase().getEntrenador().getNombre()+' '+a.getClase().getEntrenador().getApellido(),
+                        a.getFechaAsistencia(),
+                        a.getClase().isEstado()
+                    });
+            }
+        }
+    }//GEN-LAST:event_jbListarAsistenciaDeSocioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
