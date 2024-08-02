@@ -4,11 +4,14 @@ import AccesoADatos.ClaseData;
 import AccesoADatos.MembresiaData;
 import AccesoADatos.SocioData;
 import Entidades.Asistencia;
+import Entidades.Clase;
 import Entidades.Membresia;
+import Entidades.Socio;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 public class AsistenciaData {
@@ -28,18 +31,19 @@ public class AsistenciaData {
     
     public void guardarAsistencia(Asistencia asistencia){
 
-        int idSocio = asistencia.getSocio().getIdSocio();
-        Membresia membresia = membresiaData.recibirUltimaMembresia(idSocio);
-        
-        
-        
-        boolean ok1 = asistencia.getClase().isEstado();
-        boolean ok2 = asistencia.getClase().getEntrenador().isEstado();
-        boolean ok3 = asistencia.getSocio().isActivo();
+        Clase clase = asistencia.getClase();
+        Socio socio = asistencia.getSocio();
+        Membresia membresia = membresiaData.recibirUltimaMembresia(socio.getIdSocio());
+
+        boolean ok1 = clase.isEstado();
+        boolean ok2 = clase.getEntrenador().isEstado();
+        boolean ok3 = socio.isActivo();
         boolean ok4 = membresia.isActivo()
-                    && membresia.getCantidadPases()>0;
-        
-        if (!ok1 || !ok2 || !ok3 || !ok4){
+                   && membresia.getCantidadPases()>0;
+        boolean ok5 = !usuarioAsistioHoy(clase,socio);
+        boolean ok6 = contarCuposLibres(clase)>0;
+
+        if (!ok1 || !ok2 || !ok3 || !ok4 || !ok5 || !ok6){
             if(!ok1) {
                 JOptionPane.showMessageDialog(null, "No se puede agregar asistencia a una clase inactiva");
             }else if(!ok2) {
@@ -48,10 +52,14 @@ public class AsistenciaData {
                 JOptionPane.showMessageDialog(null, "Un socio inactivo no puede asistir a una clase");
             }else if (!ok4){
                 JOptionPane.showMessageDialog(null, "Necesita tener una membresia activa con pases");
+            }else if (!ok5){
+                JOptionPane.showMessageDialog(null, "El socio ya asistio a esta clase hoy");
+            }else if (!ok6){
+                JOptionPane.showMessageDialog(null, "El cupo de asistencia a esta clase esta lleno por hoy");
             }
             return;
         }
-        
+
         else{
             String sql = "INSERT INTO Asistencia (ID_Socio, ID_Clase, Fecha_Asistencia) "
                         + "VALUES ( ? , ? , ?)";
@@ -68,17 +76,14 @@ public class AsistenciaData {
 
                 if (rs.next()) {
                     asistencia.setIdAsistencia(rs.getInt(1));
-                    
+
                     //Reducimos en 1 la cantidad de pases
                     membresia.setCantidadPases(membresia.getCantidadPases()-1);
                     membresiaData.modificarCantidadPases(membresia);
-                    
+
                     JOptionPane.showMessageDialog(null, "Se agrego la asistencia exitosamente");
                 }
                 ps.close();
-                
-                
-                
 
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Asistencia "+e.getMessage());
@@ -90,13 +95,13 @@ public class AsistenciaData {
         Asistencia asistencia = null;
         String sql = "SELECT * FROM Asistencia WHERE ID_Asistencia = ?";
         PreparedStatement ps = null;
-        
+
         try{
             ps = con.prepareStatement (sql);
             ps.setInt(1, idAsistencia);
-            
+
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()){
                 asistencia = new Asistencia();
                 asistencia.setIdAsistencia(rs.getInt("ID_Asistencia"));
@@ -108,7 +113,7 @@ public class AsistenciaData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al acceder la tabla Asistencia "+e.getMessage());
         }
-        
+
         return asistencia;
     }
     
@@ -153,11 +158,10 @@ public class AsistenciaData {
     }
     
     public List<Asistencia> listarAsistenciaPorFechaYClase(LocalDate fecha, int idClase){
-        List<Asistencia> asistencias = listarAsistencia();
-        asistencias.removeIf(asistencia -> idClase  != asistencia.getClase().getIdClase()
-                                        || fecha    != asistencia.getFechaAsistencia());
-        
-        return asistencias;
+        return listarAsistencia().stream()
+                .filter(asistencia ->   idClase == asistencia.getClase().getIdClase() &&
+                        fecha.equals(asistencia.getFechaAsistencia()))
+                .collect(Collectors.toList());
     }
     
     public void modificarAsistencia(Asistencia asistencia){
@@ -185,9 +189,33 @@ public class AsistenciaData {
         }
     }
     
-    /*
-    public void eliminarAsistencia(int idAsistencia){
+    public int contarCuposLibres(Clase clase){
+        
+        LocalDate fechaDeHoy = LocalDate.now();
+        List<Asistencia> asistencias = listarAsistenciaPorFechaYClase(fechaDeHoy, clase.getIdClase());
+        
+        int cuposLibres = clase.getCapacidad() - asistencias.size();
+        
+        return cuposLibres;
+    }
     
-    }*/
+    //Verifica si el usuario asistio hoy a esa clase
+    public boolean usuarioAsistioHoy(Clase clase, Socio socio){
+        
+        boolean asistio = false;
+        
+        LocalDate fechaDeHoy = LocalDate.now();
+        List<Asistencia> asistencias = listarAsistenciaPorFechaYClase(fechaDeHoy, clase.getIdClase());
+        
+        for (Asistencia a: asistencias){
+            int idSocio1 = a.getSocio().getIdSocio();
+            int idSocio2 = socio.getIdSocio();
+            if (idSocio1 == idSocio2){
+                asistio = true;
+                break;
+            }
+        }
+        return asistio;
+    }
     
 }
